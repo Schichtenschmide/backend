@@ -67,10 +67,9 @@ public class ShiftPlanController {
 
     public ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
         shiftPlan.add(linkTo(methodOn(ShiftPlanController.class).get(shiftPlan.getStid())).withSelfRel());
-
-
+        
         if (shiftPlan.getShift() != null) {
-            shiftPlan.add(linkTo(methodOn(ShiftPlanController.class).get(shiftPlan.getShift().getStid())).withRel("shift"));
+            shiftPlan.add(linkTo(methodOn(ShiftController.class).get(shiftPlan.getShift().getStid())).withRel("shift"));
         }
         return shiftPlan;
     }
