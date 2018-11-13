@@ -36,7 +36,7 @@ public class ShiftController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/shift/{id}")
+    @GetMapping("/shifts/{id}")
     public Shift get(@PathVariable Long id) {
         return addHateoasLinks(shiftRepository.getOne(id));
     }

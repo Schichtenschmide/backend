@@ -32,6 +32,7 @@ public class ExampleApplication {
         private final ShiftPlanRepository shiftPlanRepository;
         private final ShiftRepository shiftRepository;
 
+
         @Autowired
         public initRepositoryCLR(DepartmentRepository departmentRepository,
                                  ShiftPlanRepository shiftPlanRepository,
