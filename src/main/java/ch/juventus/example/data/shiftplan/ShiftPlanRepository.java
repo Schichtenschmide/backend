@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author : ${user}
  * @since: ${date}
  */
-public interface ShiftplanRepository extends JpaRepository<Shiftplan, Long> {
+public interface ShiftPlanRepository extends JpaRepository<ShiftPlan, Long> {
 }

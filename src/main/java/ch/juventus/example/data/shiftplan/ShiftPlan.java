@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 // to resolve a lazy loading issue during JSON serialization
-public class Shiftplan extends ResourceSupport {
+public class ShiftPlan extends ResourceSupport {
     @Id
     @GeneratedValue
     private Long stid; // avoid clash with getId from HATEOAS support
@@ -28,39 +28,33 @@ public class Shiftplan extends ResourceSupport {
     @NotNull
     private int weekNumber;
 
+
     @NotNull
     private int year;
 
+
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "shift_id")
     private Shift shift;
 
-    @JsonIgnore
-    private List<Shift> shifts = new ArrayList<>();
 
-    public Shiftplan() {
+
+    public ShiftPlan() {
     }
 
-    public Shiftplan(int weekNumber, int year) {
+    public ShiftPlan(int weekNumber, int year) {
         this.weekNumber = weekNumber;
         this.year = year;
     }
 
-    public void addShift(Shift shift) {
-        shifts.add(shift);
-        //shift.setShiftplan(this);
+    public Shift getShift() {
+        return shift;
     }
 
-    public void removeShift(Shift shift) {
-        shifts.remove(shift);
-        //shift.setShiftplan(null);
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
-
-    public List<Shift> getShifts() {
-        return Collections.unmodifiableList(shifts);
-    }
-
     public Long getStid() {
         return stid;
     }
@@ -84,13 +78,7 @@ public class Shiftplan extends ResourceSupport {
     public void setYear(int year) {
         this.year = year;
     }
-    public Shift getShift() {
-        return shift;
-    }
 
-    public void setShift(Shift shift) {
-        this.shift = shift;
-    }
 }
 
 

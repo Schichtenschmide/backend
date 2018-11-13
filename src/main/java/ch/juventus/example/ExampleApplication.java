@@ -4,8 +4,9 @@ import ch.juventus.example.data.department.Department;
 import ch.juventus.example.data.department.DepartmentRepository;
 import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.shift.Shift;
-import ch.juventus.example.data.shiftplan.Shiftplan;
-import ch.juventus.example.data.shiftplan.ShiftplanRepository;
+import ch.juventus.example.data.shiftplan.ShiftPlan;
+import ch.juventus.example.data.shiftplan.ShiftPlan;
+import ch.juventus.example.data.shiftplan.ShiftPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,12 +26,12 @@ public class ExampleApplication {
     class initRepositoryCLR implements CommandLineRunner {
 
         private final DepartmentRepository departmentRepository;
-        private final ShiftplanRepository shiftplanRepository;
+        private final ShiftPlanRepository shiftPlanRepository;
 
         @Autowired
-        public initRepositoryCLR(DepartmentRepository departmentRepository, ShiftplanRepository shiftplanRepository) {
+        public initRepositoryCLR(DepartmentRepository departmentRepository, ShiftPlanRepository shiftPlanRepository) {
             this.departmentRepository = departmentRepository;
-            this.shiftplanRepository = shiftplanRepository;
+            this.shiftPlanRepository = shiftPlanRepository;
         }
 
         @Override
@@ -49,17 +50,20 @@ public class ExampleApplication {
             service.addEmployee(new Employee("Tom", "Nox", 100));
             departmentRepository.save(service);
 
+
             Shift shift = new Shift("Morgen", 800, 1200, "ms", service, 3);
-            Shiftplan shiftplan = new Shiftplan(12,2018);
-            shiftplan.addShift(shift);
-            shiftplanRepository.save(shiftplan);
+            ShiftPlan shiftplan = new ShiftPlan(12,2018);
+            shift.addShiftPlan(shiftplan);
+            shiftPlanRepository.save(shiftplan);
 
             Shift shift2 = new Shift("Nacht", 2300, 2400, "ns", kitchen, 1);
             Shift shift3 = new Shift("dll", 3, 3, "ngs", kitchen, 100);
-            Shiftplan shiftplan2 = new Shiftplan(12,2018);
-            shiftplan2.addShift(shift2);
-            shiftplan2.addShift(shift3);
-            shiftplanRepository.save(shiftplan2);
+            ShiftPlan shiftplan2 = new ShiftPlan(12,2018);
+            shift2.addShiftPlan(shiftplan);
+            shift3.addShiftPlan(shiftplan);
+
+            shiftPlanRepository.save(y);
+
         }
     }
 

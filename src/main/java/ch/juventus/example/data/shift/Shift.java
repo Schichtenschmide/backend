@@ -1,6 +1,7 @@
 package ch.juventus.example.data.shift;
 import ch.juventus.example.data.department.Department;
-import ch.juventus.example.data.shiftplan.Shiftplan;
+import ch.juventus.example.data.employee.Employee;
+import ch.juventus.example.data.shiftplan.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.ResourceSupport;
@@ -8,6 +9,9 @@ import org.springframework.hateoas.ResourceSupport;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : ${user}
@@ -35,20 +39,18 @@ public class Shift extends ResourceSupport {
     @Size(max = 20)
     private String shorthand;
 
+    private int employeeCount;
 
     @OneToMany(
             mappedBy = "shift",
             cascade = CascadeType.ALL
     )
-/*
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "shiftpla_id")
-    private Shiftplan shiftplan;
-    */
+    private List<ShiftPlan> shiftPlans = new ArrayList<>();
+
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.MERGE )
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -63,16 +65,16 @@ public class Shift extends ResourceSupport {
         this.employeeCount = employeeCount;
     }
 
-    /*
-    public Shiftplan getShiftplan() {
-        return shiftplan;
+    public void addShiftPlan(ShiftPlan shiftPlan){
+        shiftPlans.add(shiftPlan);
+        shiftPlan.setShift(this);
+
+    }
+    public void removeShiftPlan(ShiftPlan shiftPlan){
+        shiftPlans.remove(shiftPlan);
+        shiftPlan.setShift(null);
     }
 
-    public void setShiftplan(Shiftplan shiftplan) {
-        this.shiftplan = shiftplan;
-    }
-    */
-    private int employeeCount;
 
     public Long getStid() {
         return stid;
@@ -128,5 +130,25 @@ public class Shift extends ResourceSupport {
 
     public void setEmployeeCount(int employeeCount) {
         this.employeeCount = employeeCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Shift)) return false;
+        if (!super.equals(o)) return false;
+        Shift shift = (Shift) o;
+        return startTime == shift.startTime &&
+                endTime == shift.endTime &&
+                employeeCount == shift.employeeCount &&
+                Objects.equals(stid, shift.stid) &&
+                Objects.equals(name, shift.name) &&
+                Objects.equals(shorthand, shift.shorthand) &&
+                Objects.equals(department, shift.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), stid, name, startTime, endTime, shorthand, employeeCount, department);
     }
 }
