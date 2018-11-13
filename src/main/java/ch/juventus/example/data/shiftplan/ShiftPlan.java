@@ -34,7 +34,7 @@ public class ShiftPlan extends ResourceSupport {
 
 
     @JsonIgnore
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "shift_id")
     private Shift shift;
 
