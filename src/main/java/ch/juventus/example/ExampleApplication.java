@@ -3,6 +3,7 @@ package ch.juventus.example;
 import ch.juventus.example.data.department.Department;
 import ch.juventus.example.data.department.DepartmentRepository;
 import ch.juventus.example.data.employee.Employee;
+import ch.juventus.example.data.employee.EmployeeRepository;
 import ch.juventus.example.data.shift.Shift;
 import ch.juventus.example.data.shift.ShiftRepository;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
@@ -29,22 +30,30 @@ public class ExampleApplication {
     class initRepositoryCLR implements CommandLineRunner {
 
         private final DepartmentRepository departmentRepository;
+        private final EmployeeRepository employeeRepository;
         private final ShiftPlanRepository shiftPlanRepository;
         private final ShiftRepository shiftRepository;
 
 
         @Autowired
         public initRepositoryCLR(DepartmentRepository departmentRepository,
+                                 EmployeeRepository employeeRepository,
                                  ShiftPlanRepository shiftPlanRepository,
                                  ShiftRepository shiftRepository
         ) {
             this.departmentRepository = departmentRepository;
+            this.employeeRepository = employeeRepository;
             this.shiftPlanRepository = shiftPlanRepository;
             this.shiftRepository= shiftRepository;
         }
 
         @Override
         public void run(String... strings) throws Exception {
+
+            Employee employee = new Employee("Susanna", "Schmide", 10);
+
+            employeeRepository.save(employee);
+
             Department kitchen = new Department("Kitchen");
             kitchen.addEmployee(new Employee("Tim", "Taylor", 10));
             kitchen.addEmployee(new Employee("Al", "Borland", 100));
