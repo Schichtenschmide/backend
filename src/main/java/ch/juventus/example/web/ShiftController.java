@@ -68,8 +68,8 @@ public class ShiftController {
     public Shift addHateoasLinks(Shift shift) {
         shift.add(linkTo(methodOn(ShiftController.class).get(shift.getStid())).withSelfRel());
 
-        if (shift.getDepartment() != null) {
-            shift.add(linkTo(methodOn(DepartmentController.class).get(shift.getDepartment().getStid())).withRel("deparment"));
+        if (shift.getRole() != null) {
+            shift.add(linkTo(methodOn(RoleController.class).get(shift.getRole().getStid())).withRel("deparment"));
         }
 
         return shift;

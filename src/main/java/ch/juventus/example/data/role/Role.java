@@ -1,4 +1,4 @@
-package ch.juventus.example.data.department;
+package ch.juventus.example.data.role;
 
 import ch.juventus.example.data.employee.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,7 +12,7 @@ import java.util.*;
 
 @Entity
 @XmlRootElement
-public class Department extends ResourceSupport {
+public class Role extends ResourceSupport {
 
     @Id
     @GeneratedValue
@@ -23,27 +23,27 @@ public class Department extends ResourceSupport {
     private String name;
 
     @OneToMany(
-            mappedBy = "department",
+            mappedBy = "role",
             cascade = CascadeType.ALL
     )
     @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
 
-    public Department() {
+    public Role() {
     }
 
-    public Department(String name) {
+    public Role(String name) {
         this.name = name;
     }
 
     public void addEmployee(Employee employee) {
         employees.add(employee);
-        employee.setDepartment(this);
+        employee.setRole(this);
     }
 
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
-        employee.setDepartment(null);
+        employee.setRole(null);
     }
 
     public Long getStid() {

@@ -1,6 +1,5 @@
 package ch.juventus.example.data.shift;
-import ch.juventus.example.data.department.Department;
-import ch.juventus.example.data.employee.Employee;
+import ch.juventus.example.data.role.Role;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,17 +50,17 @@ public class Shift extends ResourceSupport {
 
     @JsonIgnore
     @ManyToOne(cascade=CascadeType.MERGE )
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public Shift(){}
 
-    public Shift(String name, int startTime, int endTime, String shorthand, Department department, int employeeCount) {
+    public Shift(String name, int startTime, int endTime, String shorthand, Role role, int employeeCount) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.shorthand = shorthand;
-        this.department = department;
+        this.role = role;
         this.employeeCount = employeeCount;
     }
 
@@ -116,12 +115,12 @@ public class Shift extends ResourceSupport {
         this.shorthand = shorthand;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Role getRole() {
+        return role;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public int getEmployeeCount() {
@@ -144,11 +143,11 @@ public class Shift extends ResourceSupport {
                 Objects.equals(stid, shift.stid) &&
                 Objects.equals(name, shift.name) &&
                 Objects.equals(shorthand, shift.shorthand) &&
-                Objects.equals(department, shift.department);
+                Objects.equals(role, shift.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), stid, name, startTime, endTime, shorthand, employeeCount, department);
+        return Objects.hash(super.hashCode(), stid, name, startTime, endTime, shorthand, employeeCount, role);
     }
 }

@@ -1,6 +1,6 @@
 package ch.juventus.example.data.employee;
 
-import ch.juventus.example.data.department.Department;
+import ch.juventus.example.data.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.ResourceSupport;
@@ -32,7 +32,7 @@ public class Employee extends ResourceSupport {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private Department department;
+    private Role role;
 
 
     public Employee() { // why JPA why??
@@ -84,12 +84,12 @@ public class Employee extends ResourceSupport {
         return lastName;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Role getRole() {
+        return role;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

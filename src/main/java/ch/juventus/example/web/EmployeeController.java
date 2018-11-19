@@ -4,6 +4,7 @@ import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -36,16 +37,19 @@ public class EmployeeController {
         return addHateoasLinks(employeeRepository.getOne(id));
     }
 
-    @PostMapping("/employees")
-    public ResponseEntity<?> create(@RequestBody Employee requestEmployee) {
+    @PostMapping(path = "/employees", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+    public ResponseEntity<String> create(@RequestBody Employee requestEmployee, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
 
-        Employee persistedEmployee = employeeRepository.save(requestEmployee);
+        }
+            Employee persistedEmployee = employeeRepository.save(requestEmployee);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(persistedEmployee.getStid()).toUri();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(persistedEmployee.getStid()).toUri();
 
-        return ResponseEntity.created(location).build();
+            return ResponseEntity.created(location).build();
+
     }
 
     @PutMapping("/employees/{id}")
@@ -62,8 +66,8 @@ public class EmployeeController {
 
     public Employee addHateoasLinks(Employee employee) {
         employee.add(linkTo(methodOn(EmployeeController.class).get(employee.getStid())).withSelfRel());
-        if (employee.getDepartment() != null) {
-            employee.add(linkTo(methodOn(DepartmentController.class).get(employee.getDepartment().getStid())).withRel("department"));
+        if (employee.getRole() != null) {
+            employee.add(linkTo(methodOn(RoleController.class).get(employee.getRole().getStid())).withRel("role"));
         }
         return employee;
     }
