@@ -3,6 +3,7 @@ package ch.juventus.example.web;
 import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,19 +38,18 @@ public class EmployeeController {
         return addHateoasLinks(employeeRepository.getOne(id));
     }
 
-    @PostMapping(path = "/employees", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
-    public ResponseEntity<String> create(@RequestBody Employee requestEmployee, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
 
-        }
+
+    @PostMapping("/employees")
+    public ResponseEntity<String> create(@RequestBody Employee requestEmployee) {
+        System.out.println(requestEmployee.toString());
+
             Employee persistedEmployee = employeeRepository.save(requestEmployee);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
                     .buildAndExpand(persistedEmployee.getStid()).toUri();
-
             return ResponseEntity.created(location).build();
-
     }
 
     @PutMapping("/employees/{id}")
@@ -64,7 +64,7 @@ public class EmployeeController {
     }
 
 
-    public Employee addHateoasLinks(Employee employee) {
+    private Employee addHateoasLinks(Employee employee) {
         employee.add(linkTo(methodOn(EmployeeController.class).get(employee.getStid())).withSelfRel());
         if (employee.getRole() != null) {
             employee.add(linkTo(methodOn(RoleController.class).get(employee.getRole().getStid())).withRel("role"));

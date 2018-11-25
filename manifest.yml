@@ -1,0 +1,7 @@
+---
+applications:
+- name: hello-world-jpa-ch-p
+  buildpack: java_buildpack
+  path: target/spring-boot-rest-web-0.0.1-SNAPSHOT.jar
+
+
