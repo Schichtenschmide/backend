@@ -14,13 +14,13 @@ Online: Go to https://console.developer.swisscom.com <br/>
 Command line tool: cf login -u user@example.com -p MySecretPassword -a api.lyra-836.appcloud.swisscom.com
 
 # Deployment
-
+### Prepare push to Cloud Foundry
 Edit the ExampleApplication and comment in the production URL and comment out the localhost URL
 ```
 registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT", "DELETE");
 //registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST","PUT", "DELETE");
  ```   
- Edit the application.properties and add your credentials that your DB provided (Service: MariaDB --> go to youService/Service Keys: Create Service key...)<br/>
+ Edit the application.properties and add your credentials that your DB provided (Service: MariaDB --> go to yourService/Service Keys: Create Service key...)<br/>
         spring.jpa.hibernate.ddl-auto=create-drop --> should be configured to your liking... <br/>
         Every time the instance is restarted it drops the DB and recreates all the tables, you loose all the data that was persisted!!
   ```  
@@ -30,3 +30,14 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
  spring.datasource.username=jpauser
  spring.datasource.password=password    
   ```   
+  ### Push
+  Login to Cloudfoundry --> <br/>
+  `cf login -a api.lyra-836.appcloud.swisscom.com -u user@example.com -p MySecretPassword` <br/>
+  chose you space --> <br/>
+  `cf push`
+  
+  ### Only after (first) successful Push
+  Bind Service to Application in CloudFoundry<br/>
+  Service: MariaDB --> go to yourService/Apps --> Bind to App --> yourBackend<br/>
+  or <br/>
+  yourBackend/Services --> Bind to Service --> yourService
