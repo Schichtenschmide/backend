@@ -24,7 +24,7 @@ public class ShiftController {
     private ShiftRepository shiftRepository;
 
     @Autowired
-    public ShiftController( ShiftRepository shiftRepository) {
+    public ShiftController(ShiftRepository shiftRepository) {
         this.shiftRepository = shiftRepository;
     }
 
@@ -42,7 +42,7 @@ public class ShiftController {
     }
 
     @PostMapping("/shifts")
-    public ResponseEntity<?> create(@RequestBody Shift requestShift) {
+    public ResponseEntity<String> create(@RequestBody Shift requestShift) {
 
         Shift persistedShift = shiftRepository.save(requestShift);
 

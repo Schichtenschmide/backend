@@ -9,7 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @XmlRootElement
@@ -20,7 +23,7 @@ public class Role extends ResourceSupport {
     private Long stid; // avoid clash with getId from HATEOAS support
 
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     @Size(min = 3, max = 20)
     private String name;
 

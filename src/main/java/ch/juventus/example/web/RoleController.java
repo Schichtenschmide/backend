@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,8 +32,6 @@ public class RoleController {
 
     @PostMapping("/roles")
     public ResponseEntity<String> create(@RequestBody Role requestRole) {
-        System.out.println(requestRole.toString());
-
         Role persistedEmployee = roleRepository.save(requestRole);
 
         URI location = ServletUriComponentsBuilder

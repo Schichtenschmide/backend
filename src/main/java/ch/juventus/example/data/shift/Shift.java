@@ -1,4 +1,5 @@
 package ch.juventus.example.data.shift;
+
 import ch.juventus.example.data.role.Role;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,11 +50,12 @@ public class Shift extends ResourceSupport {
 
 
     @JsonIgnore
-    @ManyToOne(cascade=CascadeType.MERGE )
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public Shift(){}
+    public Shift() {
+    }
 
     public Shift(String name, int startTime, int endTime, String shorthand, Role role, int employeeCount) {
         this.name = name;
@@ -64,12 +66,13 @@ public class Shift extends ResourceSupport {
         this.employeeCount = employeeCount;
     }
 
-    public void addShiftPlan(ShiftPlan shiftPlan){
+    public void addShiftPlan(ShiftPlan shiftPlan) {
         shiftPlans.add(shiftPlan);
         shiftPlan.setShift(this);
 
     }
-    public void removeShiftPlan(ShiftPlan shiftPlan){
+
+    public void removeShiftPlan(ShiftPlan shiftPlan) {
         shiftPlans.remove(shiftPlan);
         shiftPlan.setShift(null);
     }

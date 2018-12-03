@@ -3,9 +3,7 @@ package ch.juventus.example.web;
 import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,6 +29,7 @@ public class EmployeeController {
         return employeeRepository.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
+
     }
 
     @GetMapping("/employees/{id}")
@@ -39,17 +38,14 @@ public class EmployeeController {
     }
 
 
-
     @PostMapping("/employees")
     public ResponseEntity<String> create(@RequestBody Employee requestEmployee) {
-        System.out.println(requestEmployee.toString());
+        Employee persistedEmployee = employeeRepository.save(requestEmployee);
 
-            Employee persistedEmployee = employeeRepository.save(requestEmployee);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest().path("/{id}")
-                    .buildAndExpand(persistedEmployee.getStid()).toUri();
-            return ResponseEntity.created(location).build();
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(persistedEmployee.getStid()).toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/employees/{id}")

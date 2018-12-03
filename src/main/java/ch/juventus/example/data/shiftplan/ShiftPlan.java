@@ -7,9 +7,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : ${user}
@@ -34,10 +32,9 @@ public class ShiftPlan extends ResourceSupport {
 
 
     @JsonIgnore
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "shift_id")
     private Shift shift;
-
 
 
     public ShiftPlan() {
@@ -55,6 +52,7 @@ public class ShiftPlan extends ResourceSupport {
     public void setShift(Shift shift) {
         this.shift = shift;
     }
+
     public Long getStid() {
         return stid;
     }
@@ -79,6 +77,22 @@ public class ShiftPlan extends ResourceSupport {
         this.year = year;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ShiftPlan)) return false;
+        if (!super.equals(o)) return false;
+        ShiftPlan shiftPlan = (ShiftPlan) o;
+        return weekNumber == shiftPlan.weekNumber &&
+                year == shiftPlan.year &&
+                Objects.equals(stid, shiftPlan.stid) &&
+                Objects.equals(shift, shiftPlan.shift);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), stid, weekNumber, year, shift);
+    }
 }
 
 

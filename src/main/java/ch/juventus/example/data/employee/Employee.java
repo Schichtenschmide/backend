@@ -3,6 +3,7 @@ package ch.juventus.example.data.employee;
 import ch.juventus.example.data.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // to resolve a lazy loading issue during JSON serialization
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+// to resolve a lazy loading issue during JSON serialization
 public class Employee extends ResourceSupport {
 
     @Id
@@ -25,13 +27,15 @@ public class Employee extends ResourceSupport {
     @Size(min = 2, max = 20)
     private String lastName;
 
+    @NotNull
     private int employmentRate;
 
+    @JsonProperty
     private boolean isActive;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "role_id")
     private Role role;
 
 
@@ -57,31 +61,32 @@ public class Employee extends ResourceSupport {
         return isActive;
     }
 
-    public void setActive(boolean active) {         isActive = active;
-    }
-
-    public void setStid(Long stid) {
-        this.stid = stid;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public Long getStid() {
         return stid;
     }
 
+    public void setStid(Long stid) {
+        this.stid = stid;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Role getRole() {

@@ -41,3 +41,8 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
   Service: MariaDB --> go to yourService/Apps --> Bind to App --> yourBackend<br/>
   or <br/>
   yourBackend/Services --> Bind to Service --> yourService
+  
+  # Sonar
+   
+   Das Projekt nutzt die SonarCloud um den Code zu überprüfen.  
+   [Sonar Schichtenschmiede](https://sonarcloud.io/organizations/schichtenschmiede/projects)

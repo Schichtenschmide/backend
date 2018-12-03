@@ -42,7 +42,7 @@ public class ShiftPlanController {
     }
 
     @PostMapping("/shiftplans")
-    public ResponseEntity<?> create(@RequestBody ShiftPlan requestShift) {
+    public ResponseEntity<String> create(@RequestBody ShiftPlan requestShift) {
 
         ShiftPlan persistedShiftPlan = shiftPlanRepository.save(requestShift);
 
@@ -67,7 +67,7 @@ public class ShiftPlanController {
 
     public ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
         shiftPlan.add(linkTo(methodOn(ShiftPlanController.class).get(shiftPlan.getStid())).withSelfRel());
-        
+
         if (shiftPlan.getShift() != null) {
             shiftPlan.add(linkTo(methodOn(ShiftController.class).get(shiftPlan.getShift().getStid())).withRel("shift"));
         }

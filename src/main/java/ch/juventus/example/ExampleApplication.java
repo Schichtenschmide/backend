@@ -1,9 +1,9 @@
 package ch.juventus.example;
 
-import ch.juventus.example.data.role.Role;
-import ch.juventus.example.data.role.RoleRepository;
 import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.employee.EmployeeRepository;
+import ch.juventus.example.data.role.Role;
+import ch.juventus.example.data.role.RoleRepository;
 import ch.juventus.example.data.shift.Shift;
 import ch.juventus.example.data.shift.ShiftRepository;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
@@ -45,7 +45,7 @@ public class ExampleApplication {
             this.roleRepository = roleRepository;
             this.employeeRepository = employeeRepository;
             this.shiftPlanRepository = shiftPlanRepository;
-            this.shiftRepository= shiftRepository;
+            this.shiftRepository = shiftRepository;
         }
 
         @Bean
@@ -53,14 +53,11 @@ public class ExampleApplication {
             return new WebMvcConfigurerAdapter() {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
-                    //registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT", "DELETE");
-                    registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST","PUT", "DELETE");
+                    //registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT");
+                    registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT");
                 }
             };
         }
-
-
-
 
 
         @Override
@@ -85,7 +82,7 @@ public class ExampleApplication {
             roleRepository.save(service);
 
 
-            Shift shift1= new Shift("Morgen", 800, 1200, "ms", service, 3);
+            Shift shift1 = new Shift("Morgen", 800, 1200, "ms", service, 3);
             Shift shift2 = new Shift("Mittag", 3, 3, "ngs", kitchen, 100);
             Shift shift3 = new Shift("Nacht", 2300, 2400, "ns", kitchen, 1);
 
@@ -94,9 +91,9 @@ public class ExampleApplication {
             shiftRepository.save(shift2);
             shiftRepository.save(shift3);
 
-            ShiftPlan shiftplan1 = new ShiftPlan(12,2018);
-            ShiftPlan shiftplan2 = new ShiftPlan(11,2018);
-            ShiftPlan shiftplan3 = new ShiftPlan(01,2019);
+            ShiftPlan shiftplan1 = new ShiftPlan(12, 2018);
+            ShiftPlan shiftplan2 = new ShiftPlan(11, 2018);
+            ShiftPlan shiftplan3 = new ShiftPlan(1, 2019);
 
             shift1.addShiftPlan(shiftplan1);
             shift3.addShiftPlan(shiftplan3);
