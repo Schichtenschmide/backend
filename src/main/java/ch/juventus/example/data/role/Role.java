@@ -2,6 +2,7 @@ package ch.juventus.example.data.role;
 
 import ch.juventus.example.data.employee.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -19,8 +20,12 @@ public class Role extends ResourceSupport {
     private Long stid; // avoid clash with getId from HATEOAS support
 
     @NotNull
+    @Column(unique=true)
     @Size(min = 3, max = 20)
     private String name;
+
+    @JsonProperty
+    private boolean isActive;
 
     @OneToMany(
             mappedBy = "role",
@@ -34,6 +39,7 @@ public class Role extends ResourceSupport {
 
     public Role(String name) {
         this.name = name;
+        this.isActive = true;
     }
 
     public void addEmployee(Employee employee) {
@@ -68,5 +74,29 @@ public class Role extends ResourceSupport {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        if (!super.equals(o)) return false;
+        Role role = (Role) o;
+        return isActive == role.isActive &&
+                Objects.equals(stid, role.stid) &&
+                Objects.equals(name, role.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), stid, name, isActive);
     }
 }
