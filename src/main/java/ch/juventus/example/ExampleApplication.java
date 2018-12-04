@@ -81,7 +81,6 @@ public class ExampleApplication {
             service.addEmployee(new Employee("Tom", "Nox", 100));
             roleRepository.save(service);
 
-
             Shift shift1 = new Shift("Morgen", 800, 1200, "ms", service, 3);
             Shift shift2 = new Shift("Mittag", 3, 3, "ngs", kitchen, 100);
             Shift shift3 = new Shift("Nacht", 2300, 2400, "ns", kitchen, 1);

@@ -32,11 +32,11 @@ public class RoleController {
 
     @PostMapping("/roles")
     public ResponseEntity<String> create(@RequestBody Role requestRole) {
-        Role persistedEmployee = roleRepository.save(requestRole);
+        Role persistedRole = roleRepository.save(requestRole);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(persistedEmployee.getStid()).toUri();
+                .buildAndExpand(persistedRole.getStid()).toUri();
         return ResponseEntity.created(location).build();
     }
 
