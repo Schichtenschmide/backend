@@ -54,11 +54,12 @@ public class EmployeeController {
         employeeRepository.save(employee);
     }
 
+    /*
     @DeleteMapping("/employees/{id}")
     public void delete(@PathVariable Long id) {
         employeeRepository.delete(id);
     }
-
+    */
 
     private Employee addHateoasLinks(Employee employee) {
         employee.add(linkTo(methodOn(EmployeeController.class).get(employee.getStid())).withSelfRel());

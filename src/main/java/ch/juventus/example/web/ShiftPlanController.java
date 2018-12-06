@@ -59,11 +59,12 @@ public class ShiftPlanController {
         shiftPlanRepository.save(shiftPlan);
     }
 
+    /*
     @DeleteMapping("/shiftplans/{id}")
     public void delete(@PathVariable Long id) {
         shiftPlanRepository.delete(id);
     }
-
+    */
 
     public ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
         shiftPlan.add(linkTo(methodOn(ShiftPlanController.class).get(shiftPlan.getStid())).withSelfRel());

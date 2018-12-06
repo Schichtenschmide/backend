@@ -1,5 +1,5 @@
 # MySQL mit Spring Data JPA/Hibernate
-
+# Local instance
 Starte die Applikation:
 
     mvn spring-boot:run
@@ -54,8 +54,8 @@ Verbinde Dich (während die Applikation läuft) mit MySQL und schau den Inhalt d
     $ mysql -u jpauser -p
     Enter password: 
     ...
-    mysql> 
-    select * from employee;
+    mysql> use jpademo;  
+    mysql> select * from employee;
     
 ### Finale Konfiguration
 
@@ -79,7 +79,7 @@ bei Applikationsstart keine neuen Daten mehr eingefügt werden.
 Beim nächsten Start der Applikation werden nun keine Tabellen mehr frisch angelegt und bei Applikationsende
 keine Tabellen mehr gelöscht.
 
-# Deployment
+# Deployment to Cloud
 ## Install cloudfoundry cli
 https://github.com/cloudfoundry/cli
 

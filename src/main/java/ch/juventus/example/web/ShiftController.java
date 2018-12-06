@@ -58,12 +58,12 @@ public class ShiftController {
         shift.setStid(id);
         shiftRepository.save(shift);
     }
-
+    /*
     @DeleteMapping("/shifts/{id}")
     public void delete(@PathVariable Long id) {
         shiftRepository.delete(id);
     }
-
+    */
 
     public Shift addHateoasLinks(Shift shift) {
         shift.add(linkTo(methodOn(ShiftController.class).get(shift.getStid())).withSelfRel());

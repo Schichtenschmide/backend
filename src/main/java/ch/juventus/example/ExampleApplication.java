@@ -63,7 +63,7 @@ public class ExampleApplication {
         @Override
         public void run(String... strings) throws Exception {
 
-            Employee employee = new Employee("Susanna", "Schmide", 10);
+            Employee employee = new Employee("Susanna", "Schmiede", 10);
 
             employeeRepository.save(employee);
 
@@ -100,8 +100,7 @@ public class ExampleApplication {
             shiftPlanRepository.save(shiftplan1);
             shiftPlanRepository.save(shiftplan2);
             shiftPlanRepository.save(shiftplan3);
+
         }
     }
-
-
 }
