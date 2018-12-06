@@ -3,6 +3,7 @@ package ch.juventus.example.data.shiftplan;
 import ch.juventus.example.data.shift.Shift;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -29,6 +30,8 @@ public class ShiftPlan extends ResourceSupport {
 
     @NotNull
     private int year;
+
+    private boolean isActive;
 
 
     @JsonIgnore
@@ -77,6 +80,11 @@ public class ShiftPlan extends ResourceSupport {
         this.year = year;
     }
 
+    @JsonProperty("isActive")
+    public boolean isActive() {
+        return isActive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,6 +101,7 @@ public class ShiftPlan extends ResourceSupport {
     public int hashCode() {
         return Objects.hash(super.hashCode(), stid, weekNumber, year, shift);
     }
+
 }
 
 

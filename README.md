@@ -1,4 +1,8 @@
 # MySQL mit Spring Data JPA/Hibernate
+
+# Swagger
+Die Dokumentation der API ist unter http://localhost:8080/swagger-ui.html
+
 # Local instance
 Starte die Applikation:
 

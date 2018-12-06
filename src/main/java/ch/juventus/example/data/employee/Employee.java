@@ -30,7 +30,7 @@ public class Employee extends ResourceSupport {
     @NotNull
     private int employmentRate;
 
-    @JsonProperty
+
     private boolean isActive;
 
     @JsonIgnore
@@ -57,6 +57,7 @@ public class Employee extends ResourceSupport {
         this.employmentRate = employmentRate;
     }
 
+    @JsonProperty("isActive")
     public boolean isActive() {
         return isActive;
     }

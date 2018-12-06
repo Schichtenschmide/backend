@@ -79,6 +79,7 @@ public class Role extends ResourceSupport {
         this.employees = employees;
     }
 
+    @JsonProperty("isActive")
     public boolean isActive() {
         return isActive;
     }

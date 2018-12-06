@@ -57,6 +57,8 @@ public class Shift extends ResourceSupport {
 
     private int employeeCount;
 
+    private boolean isActive;
+
     @OneToMany(
             mappedBy = "shift",
             cascade = CascadeType.ALL
@@ -204,6 +206,15 @@ public class Shift extends ResourceSupport {
 
     public void setSunday(boolean sunday) {
         isSunday = sunday;
+    }
+
+    @JsonProperty("isActive")
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override
