@@ -1,6 +1,8 @@
 package ch.juventus.example.data.employee;
 
 import ch.juventus.example.data.role.Role;
+import ch.juventus.example.data.shiftplan.ShiftPlan;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,14 +11,19 @@ import org.springframework.hateoas.ResourceSupport;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "Employee")
 // to resolve a lazy loading issue during JSON serialization
 public class Employee extends ResourceSupport {
 
     @Id
     @GeneratedValue
+    @Column(name = "employee_id")
     private Long stid; // avoid clash with getId from HATEOAS support
 
     @NotNull
@@ -30,12 +37,20 @@ public class Employee extends ResourceSupport {
     @NotNull
     private int employmentRate;
 
-
+    @NotNull
     private boolean isActive;
 
     @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "Employee_ShiftPlan",
+            joinColumns = {@JoinColumn(name = "employee_id")},
+            inverseJoinColumns = {@JoinColumn(name = "shiftPlan_id")})
+    private Set<ShiftPlan> shiftPlanSet = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Role role;
 
 
@@ -98,18 +113,25 @@ public class Employee extends ResourceSupport {
         this.role = role;
     }
 
+    public void addShiftplan(ShiftPlan shiftPlan) {
+        shiftPlanSet.add(shiftPlan);
+    }
+
+    public Set<ShiftPlan> getShiftPlanSet() {
+        return shiftPlanSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Employee)) return false;
+        if (!super.equals(o)) return false;
         Employee employee = (Employee) o;
-
-        return stid != null ? stid.equals(employee.stid) : employee.stid == null;
+        return Objects.equals(stid, employee.stid);
     }
 
     @Override
     public int hashCode() {
-        return stid != null ? stid.hashCode() : 0;
+        return Objects.hash(super.hashCode(), stid);
     }
 }

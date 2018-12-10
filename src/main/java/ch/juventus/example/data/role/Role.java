@@ -29,13 +29,18 @@ public class Role extends ResourceSupport {
 
     @JsonProperty
     private boolean isActive;
-
+    /*
     @OneToMany(
             mappedBy = "role",
             cascade = CascadeType.ALL
     )
     @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+*/
 
     public Role() {
     }
@@ -45,6 +50,7 @@ public class Role extends ResourceSupport {
         this.isActive = true;
     }
 
+    /*
     public void addEmployee(Employee employee) {
         employees.add(employee);
         employee.setRole(this);
@@ -54,7 +60,7 @@ public class Role extends ResourceSupport {
         employees.remove(employee);
         employee.setRole(null);
     }
-
+    */
     public Long getStid() {
         return stid;
     }
@@ -71,13 +77,6 @@ public class Role extends ResourceSupport {
         this.name = name;
     }
 
-    public List<Employee> getEmployees() {
-        return Collections.unmodifiableList(employees);
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
 
     @JsonProperty("isActive")
     public boolean isActive() {
@@ -89,18 +88,11 @@ public class Role extends ResourceSupport {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Role)) return false;
-        if (!super.equals(o)) return false;
-        Role role = (Role) o;
-        return isActive == role.isActive &&
-                Objects.equals(stid, role.stid) &&
-                Objects.equals(name, role.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), stid, name, isActive);
+    public String toString() {
+        return "Role{" +
+                "stid=" + stid +
+                ", name='" + name + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }

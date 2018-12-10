@@ -1,7 +1,6 @@
 package ch.juventus.example.data.shift;
 
 import ch.juventus.example.data.role.Role;
-import ch.juventus.example.data.shiftplan.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,8 +9,6 @@ import org.springframework.hateoas.ResourceSupport;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,26 +26,26 @@ public class Shift extends ResourceSupport {
     private Long stid;
 
     @NotNull
-    @Size(min = 2, max = 20)
+    @Column(unique = true)
+    @Size(min = 3, max = 20)
     private String name;
 
     private int startTime;
 
     private int endTime;
 
-    @JsonProperty
     private boolean isMonday;
-    @JsonProperty
+
     private boolean isTuesday;
-    @JsonProperty
+
     private boolean isWednesday;
-    @JsonProperty
+
     private boolean isThursday;
-    @JsonProperty
+
     private boolean isFriday;
-    @JsonProperty
+
     private boolean isSaturday;
-    @JsonProperty
+
     private boolean isSunday;
 
     @NotNull
@@ -63,9 +60,6 @@ public class Shift extends ResourceSupport {
             mappedBy = "shift",
             cascade = CascadeType.ALL
     )
-    @JsonIgnore
-    private List<ShiftPlan> shiftPlans = new ArrayList<>();
-
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -74,7 +68,7 @@ public class Shift extends ResourceSupport {
 
     public Shift() {
     }
-
+    /*
     public Shift(String name, int startTime, int endTime, String shorthand, Role role, int employeeCount) {
         this.name = name;
         this.startTime = startTime;
@@ -83,18 +77,22 @@ public class Shift extends ResourceSupport {
         this.role = role;
         this.employeeCount = employeeCount;
     }
-
-    public void addShiftPlan(ShiftPlan shiftPlan) {
-        shiftPlans.add(shiftPlan);
-        shiftPlan.setShift(this);
-
+    */
+    public Shift(String name, int startTime, int endTime, boolean isMonday, boolean isTuesday, boolean isWednesday, boolean isThursday, boolean isFriday, boolean isSaturday, boolean isSunday, String shorthand, boolean isActive, int employeeCount) {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isMonday = isMonday;
+        this.isTuesday = isTuesday;
+        this.isWednesday = isWednesday;
+        this.isThursday = isThursday;
+        this.isFriday = isFriday;
+        this.isSaturday = isSaturday;
+        this.isSunday = isSunday;
+        this.shorthand = shorthand;
+        this.isActive = isActive;
+        this.employeeCount = employeeCount;
     }
-
-    public void removeShiftPlan(ShiftPlan shiftPlan) {
-        shiftPlans.remove(shiftPlan);
-        shiftPlan.setShift(null);
-    }
-
 
     public Long getStid() {
         return stid;
@@ -152,6 +150,7 @@ public class Shift extends ResourceSupport {
         this.employeeCount = employeeCount;
     }
 
+    @JsonProperty("isMonday")
     public boolean isMonday() {
         return isMonday;
     }
@@ -160,6 +159,7 @@ public class Shift extends ResourceSupport {
         isMonday = monday;
     }
 
+    @JsonProperty("isTuesday")
     public boolean isTuesday() {
         return isTuesday;
     }
@@ -168,6 +168,7 @@ public class Shift extends ResourceSupport {
         isTuesday = tuesday;
     }
 
+    @JsonProperty("isWednesday")
     public boolean isWednesday() {
         return isWednesday;
     }
@@ -176,6 +177,7 @@ public class Shift extends ResourceSupport {
         isWednesday = wednesday;
     }
 
+    @JsonProperty("isThursday")
     public boolean isThursday() {
         return isThursday;
     }
@@ -184,6 +186,7 @@ public class Shift extends ResourceSupport {
         isThursday = thursday;
     }
 
+    @JsonProperty("isFriday")
     public boolean isFriday() {
         return isFriday;
     }
@@ -192,6 +195,7 @@ public class Shift extends ResourceSupport {
         isFriday = friday;
     }
 
+    @JsonProperty("isSaturday")
     public boolean isSaturday() {
         return isSaturday;
     }
@@ -200,6 +204,7 @@ public class Shift extends ResourceSupport {
         isSaturday = saturday;
     }
 
+    @JsonProperty("isSunday")
     public boolean isSunday() {
         return isSunday;
     }

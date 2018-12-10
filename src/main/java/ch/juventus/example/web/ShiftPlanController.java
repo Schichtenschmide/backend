@@ -59,18 +59,14 @@ public class ShiftPlanController {
         shiftPlanRepository.save(shiftPlan);
     }
 
-    /*
-    @DeleteMapping("/shiftplans/{id}")
-    public void delete(@PathVariable Long id) {
-        shiftPlanRepository.delete(id);
-    }
-    */
-
-    public ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
+    private ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
         shiftPlan.add(linkTo(methodOn(ShiftPlanController.class).get(shiftPlan.getStid())).withSelfRel());
 
         if (shiftPlan.getShift() != null) {
             shiftPlan.add(linkTo(methodOn(ShiftController.class).get(shiftPlan.getShift().getStid())).withRel("shift"));
+        }
+        if (shiftPlan.getShift().getRole() != null) {
+            shiftPlan.add(linkTo(methodOn(ShiftController.class).get(shiftPlan.getShift().getRole().getStid())).withRel("role"));
         }
         return shiftPlan;
     }

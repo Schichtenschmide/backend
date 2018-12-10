@@ -63,43 +63,45 @@ public class ExampleApplication {
         @Override
         public void run(String... strings) throws Exception {
 
-            Employee employee = new Employee("Susanna", "Schmiede", 10);
-
-            employeeRepository.save(employee);
-
-            Role kitchen = new Role("Kitchen");
-            kitchen.addEmployee(new Employee("Tim", "Taylor", 10));
-            kitchen.addEmployee(new Employee("Al", "Borland", 100));
-            kitchen.addEmployee(new Employee("Wilson", "Wilson", 3));
-            kitchen.addEmployee(new Employee("Bob", "Vila", 90));
-            kitchen.addEmployee(new Employee("Anna", "Wildhorn", 40));
-            kitchen.addEmployee(new Employee("Robert", "Hansen", 8));
-            roleRepository.save(kitchen);
-
+            Role kitchen = new Role("Küche");
             Role service = new Role("Service");
-            service.addEmployee(new Employee("Susi", "Leicht", 10));
-            service.addEmployee(new Employee("Tom", "Nox", 100));
+
+            roleRepository.save(kitchen);
             roleRepository.save(service);
 
-            Shift shift1 = new Shift("Morgen", 800, 1200, "ms", service, 3);
-            Shift shift2 = new Shift("Mittag", 3, 3, "ngs", kitchen, 100);
-            Shift shift3 = new Shift("Nacht", 2300, 2400, "ns", kitchen, 1);
+            Employee employee1 = new Employee("Tim", "Taylor", 10);
+            Employee employee2 = new Employee("Tom", "Nox", 100);
 
+            employee1.setRole(kitchen);
+            employee2.setRole(service);
+
+            employeeRepository.save(employee1);
+            employeeRepository.save(employee2);
+
+            Shift shift1 = new Shift("Morgen", 800, 1200, true, false, true, true, false, false, false, "ms", true, 3);
+            Shift shift2 = new Shift("Mittag", 0300, 0400, true, false, true, true, false, false, false, "ms", true, 13);
+            Shift shift3 = new Shift("Nacht", 2300, 2400, true, false, true, true, false, false, false, "ns", true, 5);
 
             shiftRepository.save(shift1);
             shiftRepository.save(shift2);
             shiftRepository.save(shift3);
 
-            ShiftPlan shiftplan1 = new ShiftPlan(12, 2018);
             ShiftPlan shiftplan2 = new ShiftPlan(11, 2018);
-            ShiftPlan shiftplan3 = new ShiftPlan(1, 2019);
+            shiftplan2.setShift(shift1);
 
-            shift1.addShiftPlan(shiftplan1);
-            shift3.addShiftPlan(shiftplan3);
-
-            shiftPlanRepository.save(shiftplan1);
             shiftPlanRepository.save(shiftplan2);
-            shiftPlanRepository.save(shiftplan3);
+
+            employee1.addShiftplan(shiftplan2);
+            employee2.addShiftplan(shiftplan2);
+            /*
+            employeeRepository.save(employeeRepository.findOne(employee1.getStid()));
+            employeeRepository.save(employeeRepository.findOne(employee2.getStid()));
+            */
+
+            employeeRepository.save(employee1);
+            employeeRepository.save(employee2);
+
+
 
         }
     }

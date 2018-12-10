@@ -53,9 +53,11 @@ public class RoleController {
 
     private Role addHateoasLinks(Role role) {
         role.add(linkTo(methodOn(RoleController.class).get(role.getStid())).withSelfRel());
+        /*
         role.getEmployees().forEach(
                 e -> role.add(linkTo(methodOn(EmployeeController.class).get(e.getStid())).withRel("employees"))
         );
+        */
         return role;
     }
 }

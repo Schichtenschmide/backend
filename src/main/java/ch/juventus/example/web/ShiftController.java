@@ -1,5 +1,6 @@
 package ch.juventus.example.web;
 
+import ch.juventus.example.data.role.RoleRepository;
 import ch.juventus.example.data.shift.Shift;
 import ch.juventus.example.data.shift.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class ShiftController {
 
+    @Autowired
     private ShiftRepository shiftRepository;
 
     @Autowired
-    public ShiftController(ShiftRepository shiftRepository) {
-        this.shiftRepository = shiftRepository;
-    }
-
+    private RoleRepository roleRepository;
 
     @GetMapping("/shifts")
     public List<Shift> all() {
@@ -41,15 +40,14 @@ public class ShiftController {
         return addHateoasLinks(shiftRepository.getOne(id));
     }
 
-    @PostMapping("/shifts")
-    public ResponseEntity<String> create(@RequestBody Shift requestShift) {
-
+    @PostMapping("role/{roleId}/shifts")
+    public ResponseEntity<String> create(@PathVariable Long roleId,  @RequestBody Shift requestShift) {
+        requestShift.setRole(roleRepository.getOne(roleId));
         Shift persistedShift = shiftRepository.save(requestShift);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(persistedShift.getStid()).toUri();
-
         return ResponseEntity.created(location).build();
     }
 
@@ -58,22 +56,12 @@ public class ShiftController {
         shift.setStid(id);
         shiftRepository.save(shift);
     }
-    /*
-    @DeleteMapping("/shifts/{id}")
-    public void delete(@PathVariable Long id) {
-        shiftRepository.delete(id);
-    }
-    */
 
-    public Shift addHateoasLinks(Shift shift) {
+    private Shift addHateoasLinks(Shift shift) {
         shift.add(linkTo(methodOn(ShiftController.class).get(shift.getStid())).withSelfRel());
-
         if (shift.getRole() != null) {
-            shift.add(linkTo(methodOn(RoleController.class).get(shift.getRole().getStid())).withRel("deparment"));
+            shift.add(linkTo(methodOn(RoleController.class).get(shift.getRole().getStid())).withRel("role"));
         }
-
         return shift;
     }
-
-
 }
