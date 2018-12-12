@@ -1,7 +1,6 @@
 package ch.juventus.example.data.shift;
 
 import ch.juventus.example.data.role.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
@@ -61,23 +60,13 @@ public class Shift extends ResourceSupport {
             cascade = CascadeType.ALL
     )
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     private Role role;
 
     public Shift() {
     }
-    /*
-    public Shift(String name, int startTime, int endTime, String shorthand, Role role, int employeeCount) {
-        this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.shorthand = shorthand;
-        this.role = role;
-        this.employeeCount = employeeCount;
-    }
-    */
+
     public Shift(String name, int startTime, int endTime, boolean isMonday, boolean isTuesday, boolean isWednesday, boolean isThursday, boolean isFriday, boolean isSaturday, boolean isSunday, String shorthand, boolean isActive, int employeeCount) {
         this.name = name;
         this.startTime = startTime;

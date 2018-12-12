@@ -78,26 +78,25 @@ public class ExampleApplication {
             employeeRepository.save(employee1);
             employeeRepository.save(employee2);
 
-            Shift shift1 = new Shift("Morgen", 800, 1200, true, false, true, true, false, false, false, "ms", true, 3);
-            Shift shift2 = new Shift("Mittag", 0300, 0400, true, false, true, true, false, false, false, "ms", true, 13);
-            Shift shift3 = new Shift("Nacht", 2300, 2400, true, false, true, true, false, false, false, "ns", true, 5);
+            Shift shift1 = new Shift("Morgen", 800, 1200, true, true, true, false, false, false, false, "ms", true, 3);
+            Shift shift2 = new Shift("Mittag", 300, 400, true, false, true, true, false, false, false, "ms", true, 13);
+            Shift shift3 = new Shift("Nacht", 2300, 2400, false, false, true, false, true, false, false, "ns", true, 5);
 
+            shift1.setRole(service);
+            shift2.setRole(kitchen);
+            shift3.setRole(service);
             shiftRepository.save(shift1);
             shiftRepository.save(shift2);
             shiftRepository.save(shift3);
 
-            ShiftPlan shiftplan2 = new ShiftPlan(11, 2018);
+            ShiftPlan shiftplan2 = new ShiftPlan(11, 2018, true);
             shiftplan2.setShift(shift1);
 
             shiftPlanRepository.save(shiftplan2);
 
             employee1.addShiftplan(shiftplan2);
             employee2.addShiftplan(shiftplan2);
-            /*
-            employeeRepository.save(employeeRepository.findOne(employee1.getStid()));
-            employeeRepository.save(employeeRepository.findOne(employee2.getStid()));
-            */
-
+             
             employeeRepository.save(employee1);
             employeeRepository.save(employee2);
 

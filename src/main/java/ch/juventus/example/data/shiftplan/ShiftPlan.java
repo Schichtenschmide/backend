@@ -35,6 +35,7 @@ public class ShiftPlan extends ResourceSupport {
     @NotNull
     private int year;
 
+    @NotNull
     private boolean isActive;
 
     @ManyToMany(mappedBy = "shiftPlanSet")
@@ -47,9 +48,10 @@ public class ShiftPlan extends ResourceSupport {
     public ShiftPlan() {
     }
 
-    public ShiftPlan(int weekNumber, int year) {
+    public ShiftPlan(int weekNumber, int year, boolean isActive) {
         this.weekNumber = weekNumber;
         this.year = year;
+        this.isActive = isActive;
     }
 
     public Long getStid() {

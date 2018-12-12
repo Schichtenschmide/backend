@@ -51,9 +51,10 @@ public class ShiftController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/shifts/{id}")
-    public void update(@PathVariable Long id, @RequestBody Shift shift) {
-        shift.setStid(id);
+    @PutMapping("role/{roleId}/shift/{shiftId}")
+    public void update(@PathVariable Long roleId,@PathVariable Long shiftId, @RequestBody Shift shift) {
+        shift.setStid(shiftId);
+        shift.setRole(roleRepository.getOne(roleId));
         shiftRepository.save(shift);
     }
 

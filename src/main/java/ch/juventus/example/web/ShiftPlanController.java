@@ -1,5 +1,9 @@
 package ch.juventus.example.web;
 
+import ch.juventus.example.data.employee.Employee;
+import ch.juventus.example.data.employee.EmployeeRepository;
+import ch.juventus.example.data.role.RoleRepository;
+import ch.juventus.example.data.shift.ShiftRepository;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
 import ch.juventus.example.data.shiftplan.ShiftPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +25,17 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class ShiftPlanController {
-
+    @Autowired
     private ShiftPlanRepository shiftPlanRepository;
 
     @Autowired
-    public ShiftPlanController(ShiftPlanRepository shiftPlanRepository) {
-        this.shiftPlanRepository = shiftPlanRepository;
-    }
+    private ShiftRepository shiftRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping("/shiftplans")
     public List<ShiftPlan> all() {
@@ -41,15 +49,15 @@ public class ShiftPlanController {
         return addHateoasLinks(shiftPlanRepository.getOne(id));
     }
 
-    @PostMapping("/shiftplans")
-    public ResponseEntity<String> create(@RequestBody ShiftPlan requestShift) {
+    @PostMapping("/shift/{shiftId}/shiftplans")
+    public ResponseEntity<String> create(@PathVariable Long shiftId,@RequestBody ShiftPlan requestShiftPlan) {
 
-        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(requestShift);
+        requestShiftPlan.setShift(shiftRepository.getOne(shiftId));
+        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(requestShiftPlan);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(persistedShiftPlan.getStid()).toUri();
-
         return ResponseEntity.created(location).build();
     }
 
@@ -57,6 +65,13 @@ public class ShiftPlanController {
     public void update(@PathVariable Long id, @RequestBody ShiftPlan shiftPlan) {
         shiftPlan.setStid(id);
         shiftPlanRepository.save(shiftPlan);
+    }
+
+    @PutMapping("/shiftplan/{shiftplanId}/employee/{employeeId}")
+    public void addEmployee(@PathVariable Long shiftplanId, @PathVariable Long employeeId) {
+        Employee tempEmployee = employeeRepository.getOne(employeeId);
+        tempEmployee.addShiftplan(shiftPlanRepository.getOne(shiftplanId));
+        employeeRepository.save(tempEmployee);
     }
 
     private ShiftPlan addHateoasLinks(ShiftPlan shiftPlan) {
