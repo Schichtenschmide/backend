@@ -115,10 +115,17 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
  spring.datasource.username=jpauser
  spring.datasource.password=password    
   ```   
+  to use with MariaDB with cloud foundry use  
+  spring.jpa.spring.jpa.database-platform=org.hibernate.dialect.MariaDB10Dialect
+  ### run package
+  Build the jar file
+  ```
+  mvn package
+  ```
   ### Push
   Login to Cloudfoundry --> <br/>
   `cf login -a api.lyra-836.appcloud.swisscom.com -u user@example.com -p MySecretPassword` <br/>
-  chose you space --> <br/>
+  chose your space --> <br/>
   `cf push`
   
   ### Only after (first) successful Push
