@@ -44,13 +44,13 @@ public class ShiftPlanController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/shiftplanners/{id}")
+    @GetMapping("/shiftplan/{id}")
     public ShiftPlan get(@PathVariable Long id) {
         return addHateoasLinks(shiftPlanRepository.getOne(id));
     }
 
     @PostMapping("/shift/{shiftId}/shiftplans")
-    public ResponseEntity<String> create(@PathVariable Long shiftId,@RequestBody ShiftPlan requestShiftPlan) {
+    public ResponseEntity<String> create(@PathVariable Long shiftId, @RequestBody ShiftPlan requestShiftPlan) {
 
         requestShiftPlan.setShift(shiftRepository.getOne(shiftId));
         ShiftPlan persistedShiftPlan = shiftPlanRepository.save(requestShiftPlan);

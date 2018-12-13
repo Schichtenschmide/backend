@@ -1,17 +1,16 @@
 package ch.juventus.example.data.shiftplan;
 
 import ch.juventus.example.data.employee.Employee;
-import ch.juventus.example.data.role.Role;
 import ch.juventus.example.data.shift.Shift;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author : ${user}
@@ -21,7 +20,7 @@ import java.util.*;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "ShiftPlan")
+@Table(name = "ShiftPlan", uniqueConstraints = @UniqueConstraint(columnNames = {"weekNumber", "year"}))
 // to resolve a lazy loading issue during JSON serialization
 public class ShiftPlan extends ResourceSupport {
     @Id
@@ -98,6 +97,7 @@ public class ShiftPlan extends ResourceSupport {
     public void addEmployee(Employee employee) {
         employees.add(employee);
     }
+
     public Set<Employee> getEmployees() {
         return employees;
     }
