@@ -2,9 +2,11 @@ package ch.juventus.example.web;
 
 import ch.juventus.example.data.employee.Employee;
 import ch.juventus.example.data.employee.EmployeeRepository;
-import ch.juventus.example.data.role.RoleRepository;
+import ch.juventus.example.data.shift.Shift;
+import ch.juventus.example.data.shift.ShiftDTO;
 import ch.juventus.example.data.shift.ShiftRepository;
 import ch.juventus.example.data.shiftplan.ShiftPlan;
+import ch.juventus.example.data.shiftplan.ShiftPlanDTO;
 import ch.juventus.example.data.shiftplan.ShiftPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,22 +27,23 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class ShiftPlanController {
-    @Autowired
-    private ShiftPlanRepository shiftPlanRepository;
+    private final ShiftPlanRepository shiftPlanRepository;
+
+    private final ShiftRepository shiftRepository;
+
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    private ShiftRepository shiftRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    public ShiftPlanController(EmployeeRepository employeeRepository, ShiftPlanRepository shiftPlanRepository, ShiftRepository shiftRepository) {
+        this.employeeRepository = employeeRepository;
+        this.shiftPlanRepository = shiftPlanRepository;
+        this.shiftRepository = shiftRepository;
+    }
 
     @GetMapping("/shiftplans")
     public List<ShiftPlan> all() {
         return shiftPlanRepository.findAll().stream()
-                .map(e -> addHateoasLinks(e))
+                .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
     }
 
@@ -49,11 +52,10 @@ public class ShiftPlanController {
         return addHateoasLinks(shiftPlanRepository.getOne(id));
     }
 
-    @PostMapping("/shift/{shiftId}/shiftplans")
-    public ResponseEntity<String> create(@PathVariable Long shiftId, @RequestBody ShiftPlan requestShiftPlan) {
+    @PostMapping("/shiftplan")
+    public ResponseEntity<String> create(@RequestBody ShiftPlanDTO shiftPlanDTO) {
 
-        requestShiftPlan.setShift(shiftRepository.getOne(shiftId));
-        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(requestShiftPlan);
+        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(prepareShifPlan(new ShiftPlan(), shiftPlanDTO));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -61,16 +63,24 @@ public class ShiftPlanController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/shiftplans/{id}")
-    public void update(@PathVariable Long id, @RequestBody ShiftPlan shiftPlan) {
-        shiftPlan.setStid(id);
-        shiftPlanRepository.save(shiftPlan);
+    @PutMapping("/shiftplan/{shiftplanId}")
+    public void update(@PathVariable Long shiftplanId, @RequestBody ShiftPlanDTO shiftPlanDTO) {
+        ShiftPlan persistentShiftPlan = new ShiftPlan();
+        persistentShiftPlan.setStid(shiftplanId);
+        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
     }
 
-    @PutMapping("/shiftplan/{shiftplanId}/employee/{employeeId}")
-    public void addEmployee(@PathVariable Long shiftplanId, @PathVariable Long employeeId) {
+
+    @PutMapping("/shiftplan/{shiftPlanId}/addEmployee/{employeeId}")
+    public void addEmployee(@PathVariable Long shiftPlanId, @PathVariable Long employeeId) {
+        /*
+        , @RequestBody ShiftPlanDTO shiftPlanDTO
+        ShiftPlan persistentShiftPlan = new ShiftPlan();
+        persistentShiftPlan.setStid(shiftPlanId);
+        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
+        */
         Employee tempEmployee = employeeRepository.getOne(employeeId);
-        tempEmployee.addShiftplan(shiftPlanRepository.getOne(shiftplanId));
+        tempEmployee.addShiftplan(shiftPlanRepository.getOne(shiftPlanId));
         employeeRepository.save(tempEmployee);
     }
 
@@ -84,6 +94,14 @@ public class ShiftPlanController {
             shiftPlan.add(linkTo(methodOn(ShiftController.class).get(shiftPlan.getShift().getRole().getStid())).withRel("role"));
         }
         return shiftPlan;
+    }
+
+    private ShiftPlan prepareShifPlan(ShiftPlan persistentShiftPlan, ShiftPlanDTO shiftPlanDTO){
+        persistentShiftPlan.setWeekNumber(shiftPlanDTO.getWeekNumber());
+        persistentShiftPlan.setYear(shiftPlanDTO.getYear());
+        persistentShiftPlan.setActive(shiftPlanDTO.isActive());
+        persistentShiftPlan.setShift(shiftRepository.getOne(shiftPlanDTO.getShiftId()));
+        return persistentShiftPlan;
     }
 }
 
