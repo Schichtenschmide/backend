@@ -1,24 +1,23 @@
 # MySQL mit Spring Data JPA/Hibernate
 
-# Swagger
-Die Dokumentation der API ist unter http://localhost:8080/swagger-ui.html
-
-# Local instance
-Starte die Applikation:
+## API documentation with Swagger
+The documentation for the Backend API can be found under <br/>
+localhost: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) <br/>
+online: [https://hello-world-jpa-ch-p.scapp.io/swagger-ui.html](https://hello-world-jpa-ch-p.scapp.io/swagger-ui.html)
+## How to use the local instance for development
+Start the application
 
     mvn spring-boot:run
     
-Du kannst nun die Applikation unter folgenden URLs aufrufen: 
+You can now call the application under the following URLs: 
 - http://localhost:8080/employees
 - http://localhost:8080/roles
 - http://localhost:8080/shifts
 - http://localhost:8080/shiftplans
 
 ### MySQL konfigurieren
-
-Vorraussetzung für das Lokale ausführen ist eine Installation von MySQL mit Root-Zugriff.
-
-Zunächst muss eine neue Datenbank und ein technischer User für den Zugriff angelegt werden.
+Prerequisite for running the application locally is an installation of a MySQL Server with root access.   
+First, a new database and a technical user must be created within the database, so much so that your backend can access it.
 
     $ mysql -u root -p
     Enter password: 
@@ -27,33 +26,33 @@ Zunächst muss eine neue Datenbank und ein technischer User für den Zugriff ang
     GRANT ALL PRIVILEGES ON *.* TO 'jpauser'@'localhost' IDENTIFIED BY 'password';
     CREATE DATABASE jpademo;
 
-Aus dem Namen der Datenbank und Standard-Port 3306 ergibt sich folgende URL: `jdbc:mysql://localhost:3306/jpademo`.
+The name of the database and standard port 3306 results in the following URL: `jdbc:mysql://localhost:3306/jpademo`.
 
-Nun lässt sich MySQL für Spring Data konfigurieren. 
-Füge dazu folgende Zeilen in `src/main/resources/application.properties` hinzu:
+Now MySQL can be configured for Spring Data.  
+To do this, add the following lines in `src/main/resources/application.properties`:
 
     spring.jpa.hibernate.ddl-auto=create-drop
     spring.datasource.url=jdbc:mysql://localhost:3306/jpademo
     spring.datasource.username=jpauser
     spring.datasource.password=password
     
-Nun muss in `pom.xml` noch die Dependency der H2 Datenbank mit der für MySQL ersetzt werden: 
+Now in `pom.xml` you have to replace the dependency of the H2 database with the one for MySQL:
 
     <dependency>
        <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
     </dependency>
 
-### Applikation starten und MySQL inspizieren
+### Launch the application and inspect MySQL
 
-Starte die Applikation erneut:
+Restart the application:
 
     mvn spring-boot:run
     
-Durch `spring.jpa.hibernate.ddl-auto=create-drop` wird die Applikation die nötigen Tabellen in MySQL
-anlegen und wie zuvor mit initialen Daten füllen.
+With  `spring.jpa.hibernate.ddl-auto = create-drop`, the application will create the necessary tables in MySQL 
+and it will fill it with initial data as before.
 
-Verbinde Dich (während die Applikation läuft) mit MySQL und schau den Inhalt der Tabellen an:
+Connect (while the application is running) to MySQL and look at the contents of the tables:
 
     $ mysql -u jpauser -p
     Enter password: 
@@ -61,46 +60,45 @@ Verbinde Dich (während die Applikation läuft) mit MySQL und schau den Inhalt d
     mysql> use jpademo;  
     mysql> select * from employee;
     
-### Finale Konfiguration
+### Final configuration
 
-Derzeit wird das Schema nach Beenden der Applikation wieder gelöscht. Schön wäre, wenn die Daten dauerhaft abgelegt wären.
-
-Zunächst soll das Schema beim Applikationsstart zwar angelegt, aber bei Applikationsende nicht mehr gelöscht werden.
-In `src/main/resources/application.properties`, passe folgende Zeile an:
+At the moment the schema is deleted after the application is closed. It would be nice if the data were stored permanently.  
+  
+Initially, the schema should be created at the start of the application, but not deleted at the end of the application.
+In `src/main/resources/application.properties`, adjust the following line:
 
     spring.jpa.hibernate.ddl-auto=create
     
-Starte die Applikation neu und beende sie dann wieder (sodass die Tabellen zwar angelegt,
-aber nicht wieder gelöscht werden). 
+Restart the application and then stop it again (so that the tables are created,
+but not deleted again).  
 
-Nun ändere die Zeile erneut (damit nun auch bei Applikationsstart keine Tabellen mehr angelegt werden):
+Now change the line again (so that tables are no longer created when the application is started):  
 
     spring.jpa.hibernate.ddl-auto=none
     
-In der Klasse `ExampleApplication`, kommentiere die gesamte innere Klasse `initRepositoryCLR` aus, sodass
-bei Applikationsstart keine neuen Daten mehr eingefügt werden.
+In the class `ExampleApplication`, comment out the entire inner class` initRepositoryCLR` so that
+no new data is inserted when the application is started.
 
-Beim nächsten Start der Applikation werden nun keine Tabellen mehr frisch angelegt und bei Applikationsende
-keine Tabellen mehr gelöscht.
+At the next start of the application, tables will no longer be created and at the end of the application,
+no more tables deleted.
 
 # Deployment to Cloud
-## Install cloudfoundry cli
-https://github.com/cloudfoundry/cli
-
-https://github.com/cloudfoundry/cli#downloads
+1. Install cloudfoundry cli  
+Go to the following URL below to install the cloudfoundry client
+[https://github.com/cloudfoundry/cli](https://github.com/cloudfoundry/cli)
 
 ## Swisscom plugin
-https://github.com/swisscom/appcloud-cf-cli-plugin
+On top of that we need to install the Swisscom client plugin. Please just run the following command below  
+[https://github.com/swisscom/appcloud-cf-cli-plugin](https://github.com/swisscom/appcloud-cf-cli-plugin)
 
-Run 
 `cf install-plugin -r CF-Community "Swisscom Application Cloud"`
 
-## Login
+## Login to Swisscom Cloud Foundry
 Online: Go to https://console.developer.swisscom.com <br/>
-Command line tool: cf login -u user@example.com -p MySecretPassword -a api.lyra-836.appcloud.swisscom.com
+Command line tool: `cf login  -a api.lyra-836.appcloud.swisscom.com -u user@example.com`
 
 ## Prepare push to Cloud Foundry
-Edit the ExampleApplication and comment in the production URL and comment out the localhost URL
+Edit the `src\main\java\ch\juventus\example\ExampleApplication.java` and comment in the production URL and comment out the localhost URL
 ```
 registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT", "DELETE");
 //registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST","PUT", "DELETE");
@@ -134,16 +132,14 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
   or <br/>
   yourBackend/Services --> Bind to Service --> yourService
   
-  # Sonar
-   
-   Das Projekt nutzt die SonarCloud um den Code zu überprüfen.  
-   [Sonar Schichtenschmiede](https://sonarcloud.io/organizations/schichtenschmiede/projects)
-   ![quality gate](https://sonarcloud.io/api/project_badges/measure?project=Schichtenschmiede_backend&metric=alert_status)
-   ## install sonar-client
-   https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
-   
-   ## run to push to the sonar cloud
-   ´´´
-   sonar-scanner
-   ´´´
-
+   # Sonar
+   This project uses the SonarCloud to validate the code. Please visit the link below to see the analysis<br/>
+     [Sonar Schichtenschmiede](https://sonarcloud.io/organizations/schichtenschmiede/projects)  <br/>
+     ![quality gate](https://sonarcloud.io/api/project_badges/measure?project=Schichtenschmiede_backend&metric=alert_status)
+     1. Install the sonar-client  
+     [How to install SonarQube Scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner)
+     
+    2. In order to push the code to the sonar cloud for analysis, please use the following command below
+    ```
+     sonar-scanner
+    ```
