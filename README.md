@@ -15,7 +15,7 @@ You can now call the application under the following URLs:
 - http://localhost:8080/shifts
 - http://localhost:8080/shiftplans
 
-### MySQL konfigurieren
+### Configure MySQL
 Prerequisite for running the application locally is an installation of a MySQL Server with root access.   
 First, a new database and a technical user must be created within the database, so much so that your backend can access it.
 
@@ -83,21 +83,22 @@ At the next start of the application, tables will no longer be created and at th
 no more tables deleted.
 
 # Deployment to Cloud
+## Prerequisite
 1. Install cloudfoundry cli  
 Go to the following URL below to install the cloudfoundry client
 [https://github.com/cloudfoundry/cli](https://github.com/cloudfoundry/cli)
 
-## Swisscom plugin
-On top of that we need to install the Swisscom client plugin. Please just run the following command below  
+### Swisscom plugin
+On top of that we need to install the Swisscom client plugin. Please just run the following command below    
 [https://github.com/swisscom/appcloud-cf-cli-plugin](https://github.com/swisscom/appcloud-cf-cli-plugin)
 
 `cf install-plugin -r CF-Community "Swisscom Application Cloud"`
 
-## Login to Swisscom Cloud Foundry
+### How to login to Swisscom Cloud Foundry
 Online: Go to https://console.developer.swisscom.com <br/>
 Command line tool: `cf login  -a api.lyra-836.appcloud.swisscom.com -u user@example.com`
 
-## Prepare push to Cloud Foundry
+# Prepare push to Cloud Foundry
 Edit the `src\main\java\ch\juventus\example\ExampleApplication.java` and comment in the production URL and comment out the localhost URL
 ```
 registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT", "DELETE");
@@ -136,10 +137,10 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
    This project uses the SonarCloud to validate the code. Please visit the link below to see the analysis<br/>
      [Sonar Schichtenschmiede](https://sonarcloud.io/organizations/schichtenschmiede/projects)  <br/>
      ![quality gate](https://sonarcloud.io/api/project_badges/measure?project=Schichtenschmiede_backend&metric=alert_status)
-     1. Install the sonar-client  
+   1. Install the sonar-client  
      [How to install SonarQube Scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner)
      
-    2. In order to push the code to the sonar cloud for analysis, please use the following command below
+   2. In order to push the code to the sonar cloud for analysis, please use the following command below  
     ```
      sonar-scanner
     ```
