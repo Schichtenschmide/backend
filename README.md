@@ -138,5 +138,12 @@ registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.sc
    
    Das Projekt nutzt die SonarCloud um den Code zu überprüfen.  
    [Sonar Schichtenschmiede](https://sonarcloud.io/organizations/schichtenschmiede/projects)
-    
-![quality gate](https://sonarcloud.io/api/project_badges/measure?project=Schichtenschmiede_backend&metric=alert_status)
+   ![quality gate](https://sonarcloud.io/api/project_badges/measure?project=Schichtenschmiede_backend&metric=alert_status)
+   ## install sonar-client
+   https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+   
+   ## run to push to the sonar cloud
+   ´´´
+   sonar-scanner
+   ´´´
+
