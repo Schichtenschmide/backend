@@ -1,5 +1,6 @@
-package ch.juventus.example.data.shiftplan;
+package ch.juventus.schichtenschmiede.persistency.repository;
 
+import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

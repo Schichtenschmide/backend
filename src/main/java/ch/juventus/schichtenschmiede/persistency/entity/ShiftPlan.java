@@ -1,7 +1,5 @@
-package ch.juventus.example.data.shiftplan;
+package ch.juventus.schichtenschmiede.persistency.entity;
 
-import ch.juventus.example.data.employee.Employee;
-import ch.juventus.example.data.shift.Shift;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;

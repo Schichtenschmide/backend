@@ -1,9 +1,9 @@
-package ch.juventus.example.web;
+package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.example.data.role.RoleRepository;
-import ch.juventus.example.data.shift.Shift;
-import ch.juventus.example.data.shift.ShiftDTO;
-import ch.juventus.example.data.shift.ShiftRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.entity.Shift;
+import ch.juventus.schichtenschmiede.service.entity.ShiftDTO;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,5 @@
-package ch.juventus.example.data.employee;
+package ch.juventus.schichtenschmiede.persistency.entity;
 
-import ch.juventus.example.data.role.Role;
-import ch.juventus.example.data.shiftplan.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

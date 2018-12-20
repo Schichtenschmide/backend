@@ -1,13 +1,11 @@
-package ch.juventus.example.web;
+package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.example.data.employee.Employee;
-import ch.juventus.example.data.employee.EmployeeRepository;
-import ch.juventus.example.data.shift.Shift;
-import ch.juventus.example.data.shift.ShiftDTO;
-import ch.juventus.example.data.shift.ShiftRepository;
-import ch.juventus.example.data.shiftplan.ShiftPlan;
-import ch.juventus.example.data.shiftplan.ShiftPlanDTO;
-import ch.juventus.example.data.shiftplan.ShiftPlanRepository;
+import ch.juventus.schichtenschmiede.persistency.entity.Employee;
+import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
+import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlan;
+import ch.juventus.schichtenschmiede.service.entity.ShiftPlanDTO;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

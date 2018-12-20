@@ -1,4 +1,4 @@
-package ch.juventus.example.data.shift;
+package ch.juventus.schichtenschmiede.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,5 +1,6 @@
-package ch.juventus.example.data.role;
+package ch.juventus.schichtenschmiede.persistency.repository;
 
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

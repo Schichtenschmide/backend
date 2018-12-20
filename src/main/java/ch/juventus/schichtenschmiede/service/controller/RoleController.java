@@ -1,8 +1,8 @@
-package ch.juventus.example.web;
+package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.example.data.role.Role;
-import ch.juventus.example.data.role.RoleDTO;
-import ch.juventus.example.data.role.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
+import ch.juventus.schichtenschmiede.service.entity.RoleDTO;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

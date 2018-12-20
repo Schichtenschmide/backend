@@ -1,24 +1,27 @@
-package ch.juventus.example;
+package ch.juventus.schichtenschmiede;
 
-import ch.juventus.example.data.employee.Employee;
-import ch.juventus.example.data.employee.EmployeeRepository;
-import ch.juventus.example.data.role.Role;
-import ch.juventus.example.data.role.RoleRepository;
-import ch.juventus.example.data.shift.Shift;
-import ch.juventus.example.data.shift.ShiftRepository;
-import ch.juventus.example.data.shiftplan.ShiftPlan;
-import ch.juventus.example.data.shiftplan.ShiftPlanRepository;
+import ch.juventus.schichtenschmiede.persistency.entity.Employee;
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
+import ch.juventus.schichtenschmiede.persistency.entity.Shift;
+import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlan;
+import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftPlanRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+//TODO Auslagern in eigenen Folder aktuell gleicher folder wie repositories
 @SpringBootApplication
 @EnableSwagger2
 public class ExampleApplication {

@@ -1,4 +1,4 @@
-package ch.juventus.example.data.role;
+package ch.juventus.schichtenschmiede.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

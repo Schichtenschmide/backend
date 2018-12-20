@@ -1,4 +1,4 @@
-package ch.juventus.example.web;
+package ch.juventus.schichtenschmiede.service.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
