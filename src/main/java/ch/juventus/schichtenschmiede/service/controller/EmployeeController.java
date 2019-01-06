@@ -51,7 +51,7 @@ public class EmployeeController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("employee/{employeeId}")
+    @PutMapping("/employee/{employeeId}")
     public void updateEmployee(@PathVariable Long employeeId,
                                @RequestBody EmployeeDTO employeeDTO) {
         Employee persistentEmployee = new Employee();

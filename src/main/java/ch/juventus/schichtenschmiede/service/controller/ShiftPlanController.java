@@ -53,7 +53,7 @@ public class ShiftPlanController {
     @PostMapping("/shiftplan")
     public ResponseEntity<String> create(@RequestBody ShiftPlanDTO shiftPlanDTO) {
 
-        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(prepareShifPlan(new ShiftPlan(), shiftPlanDTO));
+        ShiftPlan persistedShiftPlan = shiftPlanRepository.save(prepareShiftPlan(new ShiftPlan(), shiftPlanDTO));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -65,7 +65,7 @@ public class ShiftPlanController {
     public void update(@PathVariable Long shiftplanId, @RequestBody ShiftPlanDTO shiftPlanDTO) {
         ShiftPlan persistentShiftPlan = new ShiftPlan();
         persistentShiftPlan.setStid(shiftplanId);
-        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
+        shiftPlanRepository.save(prepareShiftPlan(persistentShiftPlan, shiftPlanDTO));
     }
 
 
@@ -75,7 +75,7 @@ public class ShiftPlanController {
         , @RequestBody ShiftPlanDTO shiftPlanDTO
         ShiftPlan persistentShiftPlan = new ShiftPlan();
         persistentShiftPlan.setStid(shiftPlanId);
-        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
+        shiftPlanRepository.save(prepareShiftPlan(persistentShiftPlan, shiftPlanDTO));
         */
         Employee tempEmployee = employeeRepository.getOne(employeeId);
         tempEmployee.addShiftplan(shiftPlanRepository.getOne(shiftPlanId));
@@ -94,7 +94,7 @@ public class ShiftPlanController {
         return shiftPlan;
     }
 
-    private ShiftPlan prepareShifPlan(ShiftPlan persistentShiftPlan, ShiftPlanDTO shiftPlanDTO){
+    private ShiftPlan prepareShiftPlan(ShiftPlan persistentShiftPlan, ShiftPlanDTO shiftPlanDTO){
         persistentShiftPlan.setWeekNumber(shiftPlanDTO.getWeekNumber());
         persistentShiftPlan.setYear(shiftPlanDTO.getYear());
         persistentShiftPlan.setActive(shiftPlanDTO.isActive());
