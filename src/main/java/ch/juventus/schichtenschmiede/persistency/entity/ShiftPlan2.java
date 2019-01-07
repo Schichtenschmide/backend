@@ -16,7 +16,8 @@ import java.util.Set;
  */
 
 //TODO Dupluzierung für die Anpassung des neuen Schichtenplans Alex und Miguel. Wir bei fertigstellung in Shiftplan übernommen.
-//TODO Chekc DB verknüpfungen, Datum Woche Jahr, Schichtenauswahl
+//TODO Check DB verknüpfungen, Datum Woche Jahr, Schichtenauswahl
+
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "ShiftPlan2", uniqueConstraints = @UniqueConstraint(columnNames = {"weekNumber", "year"}))
