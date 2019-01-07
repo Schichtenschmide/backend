@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Set;
 
 //TODO Miguel
-
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "Employee")
