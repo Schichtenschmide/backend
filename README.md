@@ -58,7 +58,7 @@ Connect (while the application is running) to MySQL and look at the contents of 
     Enter password: 
     ...
     mysql> use jpademo;  
-    mysql> select * from employee;
+    mysql> select * from employeeOld;
     
 ### Final configuration
 

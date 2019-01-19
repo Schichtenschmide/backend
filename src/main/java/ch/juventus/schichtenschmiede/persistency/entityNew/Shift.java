@@ -101,7 +101,7 @@ public class Shift extends BaseEntity {
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
-
+    @JsonProperty("isMonday")
     public boolean isMonday() {
         return isMonday;
     }
@@ -109,7 +109,7 @@ public class Shift extends BaseEntity {
     public void setMonday(boolean monday) {
         isMonday = monday;
     }
-
+    @JsonProperty("isTuesday")
     public boolean isTuesday() {
         return isTuesday;
     }
@@ -117,7 +117,7 @@ public class Shift extends BaseEntity {
     public void setTuesday(boolean tuesday) {
         isTuesday = tuesday;
     }
-
+    @JsonProperty("isWednesday")
     public boolean isWednesday() {
         return isWednesday;
     }
@@ -125,7 +125,7 @@ public class Shift extends BaseEntity {
     public void setWednesday(boolean wednesday) {
         isWednesday = wednesday;
     }
-
+    @JsonProperty("isThursday")
     public boolean isThursday() {
         return isThursday;
     }
@@ -133,7 +133,7 @@ public class Shift extends BaseEntity {
     public void setThursday(boolean thursday) {
         isThursday = thursday;
     }
-
+    @JsonProperty("isFriday")
     public boolean isFriday() {
         return isFriday;
     }
@@ -141,7 +141,7 @@ public class Shift extends BaseEntity {
     public void setFriday(boolean friday) {
         isFriday = friday;
     }
-
+    @JsonProperty("isSaturday")
     public boolean isSaturday() {
         return isSaturday;
     }
@@ -149,7 +149,7 @@ public class Shift extends BaseEntity {
     public void setSaturday(boolean saturday) {
         isSaturday = saturday;
     }
-
+    @JsonProperty("isSunday")
     public boolean isSunday() {
         return isSunday;
     }
