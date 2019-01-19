@@ -18,6 +18,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 // to resolve a lazy loading issue during JSON serialization
+@Table(name = "Shift2")
 public class Shift extends BaseEntity {
 
     @NotNull

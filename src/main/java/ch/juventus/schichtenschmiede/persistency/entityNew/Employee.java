@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "Employee")
+@Table(name = "Employee2")
 // to resolve a lazy loading issue during JSON serialization
 public class Employee extends BaseEntity {
 
@@ -57,6 +57,7 @@ public class Employee extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.employmentRate = employmentRate;
+        this.role = role;
     }
 
     public String getFirstName() {

@@ -23,7 +23,7 @@ public class DailySchedule extends BaseEntity {
     @NotNull
     private Date date;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<Employee> employees = new HashSet<>();;
 
     @ManyToOne

@@ -1,6 +1,6 @@
 package ch.juventus.schichtenschmiede.persistency.repositoryNew;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.Shift;
+import ch.juventus.schichtenschmiede.persistency.entityNew.ShiftPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ShiftRepository extends JpaRepository<Shift, Long> {
+public interface ShiftPlanRepository2 extends JpaRepository<ShiftPlan, Long> {
 }

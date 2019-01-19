@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "ShiftPlan", uniqueConstraints = @UniqueConstraint(columnNames = {"weekNumber", "year"}))
+@Table(name = "ShiftPlan2", uniqueConstraints = @UniqueConstraint(columnNames = {"weekNumber", "year"}))
 // to resolve a lazy loading issue during JSON serialization
 public class ShiftPlan extends BaseEntity {
 
@@ -29,8 +29,8 @@ public class ShiftPlan extends BaseEntity {
     @NotNull
     private int year;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<DailySchedule> dailySchedules;
+    @OneToMany
+    private Set<DailySchedule> dailySchedules = new HashSet<>();
 
 
     public ShiftPlan() {

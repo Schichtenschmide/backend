@@ -11,13 +11,14 @@ import javax.persistence.*;
  */
 
 
-@Entity
+@MappedSuperclass
 public abstract class BaseEntity extends ResourceSupport {
 
     @Id
     @GeneratedValue
     private Long identifier;
 
+    @JsonProperty
     private boolean isActive;
 
 
