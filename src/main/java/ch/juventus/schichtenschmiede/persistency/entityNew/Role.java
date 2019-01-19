@@ -1,6 +1,5 @@
 package ch.juventus.schichtenschmiede.persistency.entityNew;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -8,6 +7,13 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.StringJoiner;
+
+
+/**
+ * @author : ${user}
+ * @since: ${date}
+ */
+
 
 @Entity
 @XmlRootElement
