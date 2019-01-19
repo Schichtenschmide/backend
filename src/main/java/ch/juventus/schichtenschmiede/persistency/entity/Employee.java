@@ -117,11 +117,6 @@ public class Employee extends ResourceSupport {
         shiftPlanSet.add(shiftPlan);
     }
 
-    //TODO wegwerfen nach Shiftplan anpassung
-    public void addShiftplan(ShiftPlan2 shiftPlan) {
-        //TODO Empty
-    }
-
     public Set<ShiftPlan> getShiftPlanSet() {
         return shiftPlanSet;
     }
