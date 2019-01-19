@@ -1,15 +1,13 @@
 package ch.juventus.schichtenschmiede.persistency.entityNew;
 
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @XmlRootElement
@@ -21,9 +19,14 @@ public class Role extends BaseEntity {
     private String name;
 
 
-    public Role(String name, boolean isActive) {
-        super(false);
+    public Role() {
+        super();
+    }
+
+    public Role(boolean isActive, String name) {
+        super(isActive);
         this.name = name;
+
 
     }
 
@@ -39,25 +42,22 @@ public class Role extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Role)) return false;
-        //TODO prüfen ob notwendig
-        //if (!super.equals(o)) return false;
+
         Role role = (Role) o;
-        return Objects.equals(super.getIdentifier(), role.getIdentifier()) &&
-                Objects.equals(name, role.name);
+        return Objects.equals(getIdentifier(), role.getIdentifier())
+                && Objects.equals(getName(), role.getName());
     }
 
     @Override
     public int hashCode() {
-        //TODO prüfen wie Linda
-        return 0;
+        return Objects.hash(getIdentifier(), getName());
     }
 
     @Override
     public String toString() {
         return "Role{" +
-                "identifier=" + super.getIdentifier() +
-                ", name='" + name + '\'' +
-                ", isActive=" + super.isActive() +
+                "Identifier='" + getIdentifier() + '\'' +
+                ", name='" + getName() + '\'' +
                 '}';
     }
 }
