@@ -1,20 +1,14 @@
 package ch.juventus.schichtenschmiede.persistency.entityNew;
 
-import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlan;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author : ${user}
@@ -111,7 +105,7 @@ public class Employee extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "EmployeeOld{" +
                 "identifier='" + getIdentifier() + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

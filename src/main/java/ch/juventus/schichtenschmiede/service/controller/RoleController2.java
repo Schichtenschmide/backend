@@ -17,26 +17,24 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class RoleController2 {
-    private RoleRepository2 roleRepository;
+    private RoleRepository2 roleRepository2;
 
     @Autowired
     public RoleController2(RoleRepository2 roleRepository) {
-        this.roleRepository = roleRepository;
+        this.roleRepository2 = roleRepository;
     }
 
     @GetMapping("/roles2")
     public List<Role> all() {
-        List<Role> list = roleRepository.findAll().stream()
-                .map(this::addHateoasLinks)
+        return roleRepository2.findAll().stream()
+                .map(e->addHateoasLinks(e))
                 .collect(Collectors.toList());
-
-        return list;
     }
 
     @PostMapping("/roles2")
     public ResponseEntity<String> create(@RequestBody Role role) {
 
-        Role persistedRole = roleRepository.save(role);
+        Role persistedRole = roleRepository2.save(role);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -44,16 +42,16 @@ public class RoleController2 {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/role2/{id}")
+    @GetMapping("/roles2/{id}")
     public Role get(@PathVariable Long id) {
-        return addHateoasLinks(roleRepository.findOne(id));
+        return addHateoasLinks(roleRepository2.findOne(id));
     }
 
-    @PutMapping("/role2/{id}")
+    @PutMapping("/roles2/{id}")
     public void update(@PathVariable Long id, @RequestBody Role role) {
         role.setIdentifier(id);
 
-        roleRepository.save(role);
+        roleRepository2.save(role);
     }
 
     private Role addHateoasLinks(Role role) {

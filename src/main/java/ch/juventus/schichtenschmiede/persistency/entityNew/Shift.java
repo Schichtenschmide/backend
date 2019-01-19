@@ -195,7 +195,7 @@ public class Shift extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Shift{" +
+        return "ShiftOld{" +
                 "identifier='" + getIdentifier() + '\'' +
                 ", name='" + name + '\'' +
                 ", startTime=" + startTime +

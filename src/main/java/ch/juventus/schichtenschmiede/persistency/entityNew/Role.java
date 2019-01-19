@@ -62,7 +62,7 @@ public class Role extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "RoleOld{" +
                 "Identifier='" + getIdentifier() + '\'' +
                 ", name='" + getName() + '\'' +
                 '}';

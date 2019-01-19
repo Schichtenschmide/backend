@@ -1,10 +1,6 @@
 package ch.juventus.schichtenschmiede.persistency.entityNew;
 
-import ch.juventus.schichtenschmiede.persistency.entity.Employee;
-import ch.juventus.schichtenschmiede.persistency.entity.Shift;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -91,7 +87,7 @@ public class ShiftPlan extends BaseEntity {
 
     @Override
     public String toString() {
-        return "ShiftPlan{" +
+        return "ShiftPlanOld{" +
                 "identifier='" + getIdentifier() + '\'' +
                 ", weekNumber=" + weekNumber +
                 ", year=" + year +

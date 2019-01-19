@@ -1,9 +1,9 @@
 package ch.juventus.schichtenschmiede;
 /*
-import ch.juventus.schichtenschmiede.persistency.entity.Employee;
-import ch.juventus.schichtenschmiede.persistency.entity.Role;
-import ch.juventus.schichtenschmiede.persistency.entity.Shift;
-import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlan;
+import ch.juventus.schichtenschmiede.persistency.entity.EmployeeOld;
+import ch.juventus.schichtenschmiede.persistency.entity.RoleOld;
+import ch.juventus.schichtenschmiede.persistency.entity.ShiftOld;
+import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlanOld;
 
 import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
@@ -49,24 +49,24 @@ public class ExampleApplication {
         private final ShiftRepository2 shiftRepository2;
         private final DailyScheduleReopistory dailyScheduleReopistory;
 
-/*
-        @Autowired
-        public initRepositoryCLR(RoleRepository roleRepository,
-                                 EmployeeRepository employeeRepository,
-                                 ShiftPlanRepository shiftPlanRepository,
-                                 ShiftRepository shiftRepository,
-                                 RoleRepository2 roleRepository2, EmployeeRepository2 employeeRepository2, ShiftPlanRepository2 shiftPlanRepository2, ShiftRepository2 shiftRepository2, DailyScheduleReopistory dailyScheduleReopistory) {
-            this.roleRepository = roleRepository;
-            this.employeeRepository = employeeRepository;
-            this.shiftPlanRepository = shiftPlanRepository;
-            this.shiftRepository = shiftRepository;
-            this.roleRepository2 = roleRepository2;
-            this.employeeRepository2 = employeeRepository2;
-            this.shiftPlanRepository2 = shiftPlanRepository2;
-            this.shiftRepository2 = shiftRepository2;
-            this.dailyScheduleReopistory = dailyScheduleReopistory;
-        }
-        */
+        /*
+                @Autowired
+                public initRepositoryCLR(RoleRepository roleRepository,
+                                         EmployeeRepository employeeRepository,
+                                         ShiftPlanRepository shiftPlanRepository,
+                                         ShiftRepository shiftRepository,
+                                         RoleRepository2 roleRepository2, EmployeeRepository2 employeeRepository2, ShiftPlanRepository2 shiftPlanRepository2, ShiftRepository2 shiftRepository2, DailyScheduleReopistory dailyScheduleReopistory) {
+                    this.roleRepository = roleRepository;
+                    this.employeeRepository = employeeRepository;
+                    this.shiftPlanRepository = shiftPlanRepository;
+                    this.shiftRepository = shiftRepository;
+                    this.roleRepository2 = roleRepository2;
+                    this.employeeRepository2 = employeeRepository2;
+                    this.shiftPlanRepository2 = shiftPlanRepository2;
+                    this.shiftRepository2 = shiftRepository2;
+                    this.dailyScheduleReopistory = dailyScheduleReopistory;
+                }
+                */
         @Autowired
         public initRepositoryCLR(RoleRepository2 roleRepository2,
                                  EmployeeRepository2 employeeRepository2,
@@ -143,14 +143,14 @@ public class ExampleApplication {
 
 
 
-            /*Role kitchen = new Role("Küche", true);
-            Role service = new Role("Service", true);
+            /*RoleOld kitchen = new RoleOld("Küche", true);
+            RoleOld service = new RoleOld("Service", true);
 
             roleRepository.save(kitchen);
             roleRepository.save(service);
 
-            Employee employee1 = new Employee("Tim", "Taylor", 20);
-            Employee employee2 = new Employee("Tom", "Nox", 100);
+            EmployeeOld employee1 = new EmployeeOld("Tim", "Taylor", 20);
+            EmployeeOld employee2 = new EmployeeOld("Tom", "Nox", 100);
 
             employee1.setRole(kitchen);
             employee2.setRole(service);
@@ -158,9 +158,9 @@ public class ExampleApplication {
             employeeRepository.save(employee1);
             employeeRepository.save(employee2);
 
-            Shift shift1 = new Shift("Morgen", 8, 12, true, true, true, false, false, false, false, "ms", true, 3);
-            Shift shift2 = new Shift("Mittag", 14, 19, true, false, true, true, false, false, false, "ms", true, 13);
-            Shift shift3 = new Shift("Nacht", 21, 24, false, false, true, false, true, false, false, "ns", true, 5);
+            ShiftOld shift1 = new ShiftOld("Morgen", 8, 12, true, true, true, false, false, false, false, "ms", true, 3);
+            ShiftOld shift2 = new ShiftOld("Mittag", 14, 19, true, false, true, true, false, false, false, "ms", true, 13);
+            ShiftOld shift3 = new ShiftOld("Nacht", 21, 24, false, false, true, false, true, false, false, "ns", true, 5);
 
             shift1.setRole(service);
             shift2.setRole(kitchen);
@@ -169,8 +169,8 @@ public class ExampleApplication {
             shiftRepository.save(shift2);
             shiftRepository.save(shift3);
 
-            ShiftPlan shiftplan2 = new ShiftPlan(11, 2018, true);
-            shiftplan2.setShift(shift1);
+            ShiftPlanOld shiftplan2 = new ShiftPlanOld(11, 2018, true);
+            shiftplan2.setShiftOld(shift1);
 
 
 
