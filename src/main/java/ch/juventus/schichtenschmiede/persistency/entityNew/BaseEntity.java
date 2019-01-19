@@ -9,7 +9,6 @@ import javax.persistence.*;
 public abstract class BaseEntity extends ResourceSupport {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue
     private Long identifier;
 
