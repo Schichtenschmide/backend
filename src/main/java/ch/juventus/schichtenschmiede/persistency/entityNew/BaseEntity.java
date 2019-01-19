@@ -5,6 +5,12 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 
+/**
+ * @author : ${user}
+ * @since: ${date}
+ */
+
+
 @Entity
 public abstract class BaseEntity extends ResourceSupport {
 
