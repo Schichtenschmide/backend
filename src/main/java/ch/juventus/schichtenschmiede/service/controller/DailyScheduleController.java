@@ -13,6 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +43,31 @@ public class DailyScheduleController {
 
     @GetMapping("/dailyschedules")
     public List<DailySchedule> all() {
-        return dailyScheduleReopistory.findAll().stream()
+        Date today = new Date(new java.util.Date().getTime());
+        return allofweek(today);
+    }
+
+    @GetMapping("/dailyschedulesofweek/{dateOfWeek}")
+    public List<DailySchedule> allofweek(@PathVariable Date date) {
+        List<DailySchedule> allDailySchedules = dailyScheduleReopistory.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
+        List<DailySchedule> dailySchedulesOfWeek = new ArrayList<DailySchedule>();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date monday = new Date(cal.getTime().getTime());
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        Date sunday = new Date(cal.getTime().getTime());
+
+        for (Iterator i = allDailySchedules.iterator(); i.hasNext();) {
+            DailySchedule ds = (DailySchedule) i.next();
+            if (ds.getDate().before(sunday) || ds.getDate().equals(sunday) || ds.getDate().after(monday) || ds.getDate().equals(monday)) {
+                dailySchedulesOfWeek.add(ds);
+            }
+        }
+
+        return dailySchedulesOfWeek;
     }
 
 
