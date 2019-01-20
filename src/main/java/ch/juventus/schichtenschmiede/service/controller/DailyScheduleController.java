@@ -7,8 +7,11 @@ import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepositor
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository2;
 import ch.juventus.schichtenschmiede.service.entity.DailyScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +38,7 @@ public class DailyScheduleController {
         this.dailyScheduleReopistory = dailyScheduleReopistory;
     }
 
-    @GetMapping("/dailyschedule")
+    @GetMapping("/dailyschedules")
     public List<DailySchedule> all() {
         return dailyScheduleReopistory.findAll().stream()
                 .map(e -> addHateoasLinks(e))
@@ -43,30 +46,28 @@ public class DailyScheduleController {
     }
 
 
-    @GetMapping("/dailyschedule/{id}")
+    @GetMapping("/dailyschedules/{id}")
     public DailySchedule get(@PathVariable Long id) {
         return addHateoasLinks(dailyScheduleReopistory.findOne(id));
     }
 
-    /*
-    @PostMapping("/shifts2")
-    public ResponseEntity<String> create(@RequestBody ShiftDTO shiftDTO) {
-        Shift persistedShift = shiftRepository.save(prepareShift(new Shift(), shiftDTO));
+    @PostMapping("/dailyschedules")
+    public ResponseEntity<String> create(@RequestBody DailyScheduleDTO dailyScheduleDTO) {
+        DailySchedule dailySchedule = dailyScheduleReopistory.save(prepareDailySchedule(new DailySchedule(), dailyScheduleDTO));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(persistedShift.getIdentifier()).toUri();
+                .buildAndExpand(dailySchedule.getIdentifier()).toUri();
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/shifts2/{shiftId}")
-    public void update(@PathVariable Long shiftId, @RequestBody ShiftDTO shiftDTO) {
+    @PutMapping("/dailyschedules/{dailyschedule_id}")
+    public void update(@PathVariable Long dailyschedule_id, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
 
-        Shift persistedShift = new Shift();
-        persistedShift.setIdentifier(shiftId);
-        shiftRepository.save(prepareShift(persistedShift, shiftDTO));
+        DailySchedule dailySchedule = new DailySchedule();
+        dailySchedule.setIdentifier(dailyschedule_id);
+        dailyScheduleReopistory.save(prepareDailySchedule(dailySchedule, dailyScheduleDTO));
     }
-    */
 
     private DailySchedule addHateoasLinks(DailySchedule dailySchedule) {
         dailySchedule.add(linkTo(methodOn(DailyScheduleController.class).get(dailySchedule.getIdentifier())).withSelfRel());
@@ -81,7 +82,7 @@ public class DailyScheduleController {
 
         return dailySchedule;
     }
-    private DailySchedule dailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO ){
+    private DailySchedule prepareDailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO ){
 
 
         dailySchedule.setActive(dailyScheduleDTO.isActive());
