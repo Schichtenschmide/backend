@@ -28,8 +28,8 @@ public class ShiftController2 {
 
 
     @Autowired
-    public ShiftController2( ShiftRepository2 shiftRepositoryOld, RoleRepository2 roleRepository2) {
-        this.shiftRepository = shiftRepositoryOld;
+    public ShiftController2( ShiftRepository2 shiftRepository, RoleRepository2 roleRepository2) {
+        this.shiftRepository = shiftRepository;
         this.roleRepository2 = roleRepository2;
     }
 
