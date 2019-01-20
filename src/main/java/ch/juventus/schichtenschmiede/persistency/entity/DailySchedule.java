@@ -2,6 +2,7 @@ package ch.juventus.schichtenschmiede.persistency.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -78,6 +79,7 @@ public class DailySchedule extends BaseEntity {
         this.date = date;
     }
 
+    @JsonProperty("isMonday")
     public boolean isMonday() {
         return isMonday;
     }
@@ -86,6 +88,7 @@ public class DailySchedule extends BaseEntity {
         isMonday = monday;
     }
 
+    @JsonProperty("isTuesday")
     public boolean isTuesday() {
         return isTuesday;
     }
@@ -94,6 +97,7 @@ public class DailySchedule extends BaseEntity {
         isTuesday = tuesday;
     }
 
+    @JsonProperty("isWednesday")
     public boolean isWednesday() {
         return isWednesday;
     }
@@ -102,6 +106,7 @@ public class DailySchedule extends BaseEntity {
         isWednesday = wednesday;
     }
 
+    @JsonProperty("isThursday")
     public boolean isThursday() {
         return isThursday;
     }
@@ -110,6 +115,7 @@ public class DailySchedule extends BaseEntity {
         isThursday = thursday;
     }
 
+    @JsonProperty("isFriday")
     public boolean isFriday() {
         return isFriday;
     }
@@ -118,6 +124,7 @@ public class DailySchedule extends BaseEntity {
         isFriday = friday;
     }
 
+    @JsonProperty("isSaturday")
     public boolean isSaturday() {
         return isSaturday;
     }
@@ -126,6 +133,7 @@ public class DailySchedule extends BaseEntity {
         isSaturday = saturday;
     }
 
+    @JsonProperty("isSunday")
     public boolean isSunday() {
         return isSunday;
     }
