@@ -43,12 +43,12 @@ public class DailyScheduleController {
 
     @GetMapping("/dailyschedules")
     public List<DailySchedule> all() {
-        Date today = new Date(new java.util.Date().getTime());
-        return allOfWeek(today);
+        return allOfWeek(new java.util.Date());
     }
 
     @GetMapping("/dailyschedulesofweek/{dateOfWeek}")
-    public List<DailySchedule> allOfWeek(@PathVariable Date dateOfWeek) {
+    public List<DailySchedule> allOfWeek(@PathVariable java.util.Date dateOfWeek) {
+
         List<DailySchedule> allDailySchedules = dailyScheduleReopistory.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
