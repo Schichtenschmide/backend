@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -22,6 +23,20 @@ public class DailySchedule extends BaseEntity {
 
     @NotNull
     private Date date;
+
+    private boolean isMonday;
+
+    private boolean isTuesday;
+
+    private boolean isWednesday;
+
+    private boolean isThursday;
+
+    private boolean isFriday;
+
+    private boolean isSaturday;
+
+    private boolean isSunday;
 
     @ManyToMany
     @JoinTable(name = "daily_schedule_employees",
@@ -44,6 +59,15 @@ public class DailySchedule extends BaseEntity {
         super(isActive);
         this.date = date;
         this.shift = shift;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        this.isMonday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
+        this.isTuesday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY;
+        this.isWednesday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY;
+        this.isThursday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY;
+        this.isFriday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
+        this.isSaturday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
+        this.isSunday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
     }
 
     public Date getDate() {
@@ -52,6 +76,62 @@ public class DailySchedule extends BaseEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isMonday() {
+        return isMonday;
+    }
+
+    public void setMonday(boolean monday) {
+        isMonday = monday;
+    }
+
+    public boolean isTuesday() {
+        return isTuesday;
+    }
+
+    public void setTuesday(boolean tuesday) {
+        isTuesday = tuesday;
+    }
+
+    public boolean isWednesday() {
+        return isWednesday;
+    }
+
+    public void setWednesday(boolean wednesday) {
+        isWednesday = wednesday;
+    }
+
+    public boolean isThursday() {
+        return isThursday;
+    }
+
+    public void setThursday(boolean thursday) {
+        isThursday = thursday;
+    }
+
+    public boolean isFriday() {
+        return isFriday;
+    }
+
+    public void setFriday(boolean friday) {
+        isFriday = friday;
+    }
+
+    public boolean isSaturday() {
+        return isSaturday;
+    }
+
+    public void setSaturday(boolean saturday) {
+        isSaturday = saturday;
+    }
+
+    public boolean isSunday() {
+        return isSunday;
+    }
+
+    public void setSunday(boolean sunday) {
+        isSunday = sunday;
     }
 
     public Set<Employee> getEmployees() {
