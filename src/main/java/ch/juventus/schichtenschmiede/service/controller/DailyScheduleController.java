@@ -44,17 +44,17 @@ public class DailyScheduleController {
     @GetMapping("/dailyschedules")
     public List<DailySchedule> all() {
         Date today = new Date(new java.util.Date().getTime());
-        return allofweek(today);
+        return allOfWeek(today);
     }
 
     @GetMapping("/dailyschedulesofweek/{dateOfWeek}")
-    public List<DailySchedule> allofweek(@PathVariable Date date) {
+    public List<DailySchedule> allOfWeek(@PathVariable Date dateOfWeek) {
         List<DailySchedule> allDailySchedules = dailyScheduleReopistory.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
         List<DailySchedule> dailySchedulesOfWeek = new ArrayList<DailySchedule>();
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(dateOfWeek);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         Date monday = new Date(cal.getTime().getTime());
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
