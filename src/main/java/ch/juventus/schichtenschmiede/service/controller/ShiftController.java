@@ -1,8 +1,8 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.Shift;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository2;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository2;
+import ch.juventus.schichtenschmiede.persistency.entity.Shift;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository;
 import ch.juventus.schichtenschmiede.service.entity.ShiftDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,31 +21,31 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @since: ${date}
  */
 @RestController
-public class ShiftController2 {
+public class ShiftController {
 
-    private final ShiftRepository2 shiftRepository;
-    private final RoleRepository2 roleRepository2;
+    private final ShiftRepository shiftRepository;
+    private final RoleRepository roleRepository;
 
 
     @Autowired
-    public ShiftController2( ShiftRepository2 shiftRepository, RoleRepository2 roleRepository2) {
+    public ShiftController(ShiftRepository shiftRepository, RoleRepository roleRepository) {
         this.shiftRepository = shiftRepository;
-        this.roleRepository2 = roleRepository2;
+        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/shifts2")
+    @GetMapping("/shifts")
     public List<Shift> all() {
         return shiftRepository.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/shifts2/{id}")
+    @GetMapping("/shifts/{id}")
     public Shift get(@PathVariable Long id) {
         return addHateoasLinks(shiftRepository.findOne(id));
     }
 
-    @PostMapping("/shifts2")
+    @PostMapping("/shifts")
     public ResponseEntity<String> create(@RequestBody ShiftDTO shiftDTO) {
         Shift persistedShift = shiftRepository.save(prepareShift(new Shift(), shiftDTO));
 
@@ -55,7 +55,7 @@ public class ShiftController2 {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/shifts2/{shiftId}")
+    @PutMapping("/shifts/{shiftId}")
     public void update(@PathVariable Long shiftId, @RequestBody ShiftDTO shiftDTO) {
 
         Shift persistedShift = new Shift();
@@ -64,9 +64,9 @@ public class ShiftController2 {
     }
 
     private Shift addHateoasLinks(Shift shift) {
-        shift.add(linkTo(methodOn(ShiftController2.class).get(shift.getIdentifier())).withSelfRel());
+        shift.add(linkTo(methodOn(ShiftController.class).get(shift.getIdentifier())).withSelfRel());
         if (shift.getRole() != null) {
-            shift.add(linkTo(methodOn(RoleController2.class).get(shift.getRole().getIdentifier())).withRel("role"));
+            shift.add(linkTo(methodOn(RoleController.class).get(shift.getRole().getIdentifier())).withRel("role"));
         }
         return shift;
     }
@@ -83,7 +83,7 @@ public class ShiftController2 {
         persistentShift.setSunday(shiftDTO.isSunday());
         persistentShift.setEmployeeCount(shiftDTO.getEmployeeCount());
         persistentShift.setActive(shiftDTO.isActive());
-        persistentShift.setRole(roleRepository2.getOne(shiftDTO.getRoleId()));
+        persistentShift.setRole(roleRepository.getOne(shiftDTO.getRoleId()));
         return persistentShift;
     }
 }

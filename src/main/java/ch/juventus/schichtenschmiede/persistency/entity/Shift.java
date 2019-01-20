@@ -1,9 +1,8 @@
-package ch.juventus.schichtenschmiede.persistency.entityNew;
+package ch.juventus.schichtenschmiede.persistency.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +17,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 // to resolve a lazy loading issue during JSON serialization
-@Table(name = "Shift2")
+@Table(name = "Shift")
 public class Shift extends BaseEntity {
 
     @NotNull

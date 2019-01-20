@@ -1,8 +1,8 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.Role;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository2;
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +16,25 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-public class RoleController2 {
-    private RoleRepository2 roleRepository2;
+public class RoleController {
+    private RoleRepository roleRepository;
 
     @Autowired
-    public RoleController2(RoleRepository2 roleRepository) {
-        this.roleRepository2 = roleRepository;
+    public RoleController(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/roles2")
+    @GetMapping("/roles")
     public List<Role> all() {
-        return roleRepository2.findAll().stream()
+        return roleRepository.findAll().stream()
                 .map(e->addHateoasLinks(e))
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/roles2")
+    @PostMapping("/roles")
     public ResponseEntity<String> create(@RequestBody Role role) {
 
-        Role persistedRole = roleRepository2.save(role);
+        Role persistedRole = roleRepository.save(role);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -42,20 +42,20 @@ public class RoleController2 {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/roles2/{id}")
+    @GetMapping("/roles/{id}")
     public Role get(@PathVariable Long id) {
-        return addHateoasLinks(roleRepository2.findOne(id));
+        return addHateoasLinks(roleRepository.findOne(id));
     }
 
-    @PutMapping("/roles2/{id}")
+    @PutMapping("/roles/{id}")
     public void update(@PathVariable Long id, @RequestBody Role role) {
         role.setIdentifier(id);
 
-        roleRepository2.save(role);
+        roleRepository.save(role);
     }
 
     private Role addHateoasLinks(Role role) {
-        role.add(linkTo(methodOn(RoleController2.class).get(role.getIdentifier())).withSelfRel());
+        role.add(linkTo(methodOn(RoleController.class).get(role.getIdentifier())).withSelfRel());
         return role;
     }
 }

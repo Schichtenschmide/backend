@@ -1,4 +1,4 @@
-package ch.juventus.schichtenschmiede.persistency.entityNew;
+package ch.juventus.schichtenschmiede.persistency.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "Employee2")
+@Table(name = "Employee")
 // to resolve a lazy loading issue during JSON serialization
 public class Employee extends BaseEntity {
 

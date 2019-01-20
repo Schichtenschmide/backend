@@ -1,6 +1,6 @@
 package ch.juventus.schichtenschmiede.persistency.repositoryNew;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.DailySchedule;
+import ch.juventus.schichtenschmiede.persistency.entity.DailySchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

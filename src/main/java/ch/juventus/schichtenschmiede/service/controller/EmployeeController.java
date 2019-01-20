@@ -1,9 +1,8 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.Employee;
-import ch.juventus.schichtenschmiede.persistency.entityNew.Role;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository2;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository2;
+import ch.juventus.schichtenschmiede.persistency.entity.Employee;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
 import ch.juventus.schichtenschmiede.service.entity.EmployeeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,31 +17,31 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-public class EmployeeController2 {
+public class EmployeeController {
 
-    private final EmployeeRepository2 employeeRepository;
-    private final RoleRepository2 roleRepository2;
+    private final EmployeeRepository employeeRepository;
+    private final RoleRepository roleRepository;
 
 
     @Autowired
-    public EmployeeController2(EmployeeRepository2 employeeRepository, RoleRepository2 roleRepository2) {
+    public EmployeeController(EmployeeRepository employeeRepository, RoleRepository roleRepository) {
         this.employeeRepository = employeeRepository;
-        this.roleRepository2 = roleRepository2;
+        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/employees2")
+    @GetMapping("/employees")
     public List<Employee> all() {
         return employeeRepository.findAll().stream()
                 .map(e -> addHateoasLinks(e))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/employees2/{id}")
+    @GetMapping("/employees/{id}")
     public Employee get(@PathVariable Long id) {
         return addHateoasLinks(employeeRepository.getOne(id));
     }
 
-    @PostMapping("/employees2")
+    @PostMapping("/employees")
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee persistentEmployee = employeeRepository.save(prepareEmployee(new Employee(),employeeDTO));
         URI location = ServletUriComponentsBuilder
@@ -51,7 +50,7 @@ public class EmployeeController2 {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/employees2/{employeeId}")
+    @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@PathVariable Long employeeId,
                                @RequestBody EmployeeDTO  employeeDTO) {
         Employee persistentEmployee = new Employee();
@@ -60,9 +59,9 @@ public class EmployeeController2 {
     }
 
     private Employee addHateoasLinks(Employee employee) {
-        employee.add(linkTo(methodOn(EmployeeController2.class).get(employee.getIdentifier())).withSelfRel());
+        employee.add(linkTo(methodOn(EmployeeController.class).get(employee.getIdentifier())).withSelfRel());
         if (employee.getRole() != null) {
-            employee.add(linkTo(methodOn(RoleController2.class).get(employee.getRole().getIdentifier())).withRel("role"));
+            employee.add(linkTo(methodOn(RoleController.class).get(employee.getRole().getIdentifier())).withRel("role"));
         }
         return employee;
     }
@@ -71,7 +70,7 @@ public class EmployeeController2 {
         persistentEmployee.setLastName(employeeDTO.getLastName());
         persistentEmployee.setActive(employeeDTO.isActive());
         persistentEmployee.setEmploymentRate(employeeDTO.getEmploymentRate());
-        persistentEmployee.setRole(roleRepository2.findOne(employeeDTO.getRoleId()));
+        persistentEmployee.setRole(roleRepository.findOne(employeeDTO.getRoleId()));
         return persistentEmployee;
     }
 

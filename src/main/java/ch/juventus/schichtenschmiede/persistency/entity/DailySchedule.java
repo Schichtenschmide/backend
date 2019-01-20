@@ -1,4 +1,4 @@
-package ch.juventus.schichtenschmiede.persistency.entityNew;
+package ch.juventus.schichtenschmiede.persistency.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

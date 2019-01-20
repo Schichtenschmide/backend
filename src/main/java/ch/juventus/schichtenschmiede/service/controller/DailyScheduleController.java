@@ -1,10 +1,9 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.DailySchedule;
-import ch.juventus.schichtenschmiede.persistency.entityNew.Shift;
+import ch.juventus.schichtenschmiede.persistency.entity.DailySchedule;
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.DailyScheduleReopistory;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository2;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository2;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository;
 import ch.juventus.schichtenschmiede.service.entity.DailyScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +28,13 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class DailyScheduleController {
 
-    private final ShiftRepository2 shiftRepository;
-    private final EmployeeRepository2 employeeRepository;
+    private final ShiftRepository shiftRepository;
+    private final EmployeeRepository employeeRepository;
     private final DailyScheduleReopistory dailyScheduleReopistory;
 
 
     @Autowired
-    public DailyScheduleController(ShiftRepository2 shiftRepository, EmployeeRepository2 employeeRepository, DailyScheduleReopistory dailyScheduleReopistory) {
+    public DailyScheduleController(ShiftRepository shiftRepository, EmployeeRepository employeeRepository, DailyScheduleReopistory dailyScheduleReopistory) {
         this.shiftRepository = shiftRepository;
         this.employeeRepository = employeeRepository;
         this.dailyScheduleReopistory = dailyScheduleReopistory;
@@ -98,11 +97,11 @@ public class DailyScheduleController {
         dailySchedule.add(linkTo(methodOn(DailyScheduleController.class).get(dailySchedule.getIdentifier())).withSelfRel());
 
         if (dailySchedule.getEmployees() != null) {
-            dailySchedule.add(linkTo(methodOn(EmployeeController2.class).get(dailySchedule.getEmployees().iterator().next().getIdentifier())).withRel("employee"));
+            dailySchedule.add(linkTo(methodOn(EmployeeController.class).get(dailySchedule.getEmployees().iterator().next().getIdentifier())).withRel("employee"));
         }
 
         if (dailySchedule.getShift() != null) {
-            dailySchedule.add(linkTo(methodOn(ShiftController2.class).get(dailySchedule.getShift().getIdentifier())).withRel("shift"));
+            dailySchedule.add(linkTo(methodOn(ShiftController.class).get(dailySchedule.getShift().getIdentifier())).withRel("shift"));
         }
 
         return dailySchedule;

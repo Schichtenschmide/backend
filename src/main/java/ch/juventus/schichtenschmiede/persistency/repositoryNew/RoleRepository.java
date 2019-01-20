@@ -1,14 +1,9 @@
 package ch.juventus.schichtenschmiede.persistency.repositoryNew;
 
-import ch.juventus.schichtenschmiede.persistency.entityNew.Shift;
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author : ${user}
- * @since: ${date}
- */
-
 @Repository
-public interface ShiftRepository2 extends JpaRepository<Shift, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 }

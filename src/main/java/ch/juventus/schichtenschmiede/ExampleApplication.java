@@ -9,7 +9,7 @@ import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.ShiftPlanRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;*/
-import ch.juventus.schichtenschmiede.persistency.entityNew.*;
+import ch.juventus.schichtenschmiede.persistency.entity.*;
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -43,10 +43,9 @@ public class ExampleApplication {
         private final ShiftRepository shiftRepository;
         */
         //New Repos
-        private final RoleRepository2 roleRepository2;
-        private final EmployeeRepository2 employeeRepository2;
-        private final ShiftPlanRepository2 shiftPlanRepository2;
-        private final ShiftRepository2 shiftRepository2;
+        private final RoleRepository roleRepository;
+        private final EmployeeRepository employeeRepository;
+        private final ShiftRepository shiftRepository;
         private final DailyScheduleReopistory dailyScheduleReopistory;
 
         /*
@@ -68,15 +67,13 @@ public class ExampleApplication {
                 }
                 */
         @Autowired
-        public initRepositoryCLR(RoleRepository2 roleRepository2,
-                                 EmployeeRepository2 employeeRepository2,
-                                 ShiftPlanRepository2 shiftPlanRepository2,
-                                 ShiftRepository2 shiftRepository2,
+        public initRepositoryCLR(RoleRepository roleRepository,
+                                 EmployeeRepository employeeRepository,
+                                 ShiftRepository shiftRepository,
                                  DailyScheduleReopistory dailyScheduleReopistory) {
-            this.roleRepository2 = roleRepository2;
-            this.employeeRepository2 = employeeRepository2;
-            this.shiftPlanRepository2 = shiftPlanRepository2;
-            this.shiftRepository2 = shiftRepository2;
+            this.roleRepository = roleRepository;
+            this.employeeRepository = employeeRepository;
+            this.shiftRepository = shiftRepository;
             this.dailyScheduleReopistory = dailyScheduleReopistory;
         }
 
@@ -98,23 +95,23 @@ public class ExampleApplication {
 
             Role service = new Role(true, "Service");
 
-            roleRepository2.save(kitchen);
-            roleRepository2.save(service);
+            roleRepository.save(kitchen);
+            roleRepository.save(service);
 
             Employee employee1 = new Employee(true,"Tim", "Taylor", 20, kitchen);
             Employee employee2 = new Employee(true,"Tom", "Nox", 100, service);
 
 
-            employeeRepository2.save(employee1);
-            employeeRepository2.save(employee2);
+            employeeRepository.save(employee1);
+            employeeRepository.save(employee2);
 
             Shift shift1 = new Shift(true,"Morgen", 8, 12, true, true, true, false, false, false, false, 3, service);
             Shift shift2 = new Shift(true,"Mittag", 14, 19, true, false, true, true, false, false, false, 13, kitchen);
             Shift shift3 = new Shift(true,"Nacht", 21, 24, false, false, true, false, true, false, false, 5, service);
 
-            shiftRepository2.save(shift1);
-            shiftRepository2.save(shift2);
-            shiftRepository2.save(shift3);
+            shiftRepository.save(shift1);
+            shiftRepository.save(shift2);
+            shiftRepository.save(shift3);
 
             java.util.Date date = new java.util.Date();
             DailySchedule dailySchedule11 = new DailySchedule(true, new Date(date.getTime()), shift1);
@@ -131,15 +128,6 @@ public class ExampleApplication {
 
 
 
-            ShiftPlan shiftplan = new ShiftPlan(true, 3, 2019);
-
-            shiftplan.addDailySchedule(dailySchedule11);
-            shiftplan.addDailySchedule(dailySchedule12);
-            shiftplan.addDailySchedule(dailySchedule13);
-
-
-
-            shiftPlanRepository2.save(shiftplan);
 
 
 
