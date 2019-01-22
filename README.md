@@ -1,4 +1,4 @@
-# MySQL mit Spring Data JPA/Hibernate
+# Anleitung Backend
 
 ## API documentation with Swagger
 The documentation for the Backend API can be found under <br/>
