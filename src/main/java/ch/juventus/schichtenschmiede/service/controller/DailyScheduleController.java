@@ -1,6 +1,7 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
 import ch.juventus.schichtenschmiede.persistency.entity.DailySchedule;
+import ch.juventus.schichtenschmiede.persistency.entity.Employee;
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.DailyScheduleReopistory;
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository;
 import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository;
@@ -85,6 +86,20 @@ public class DailyScheduleController {
         return ResponseEntity.created(location).build();
     }
 
+
+    @PutMapping("/dailyschedules/{dailySchedulesId}/addEmployee/{employeeId}")
+    public void addEmployee(@PathVariable Long dailySchedulesId, @PathVariable Long employeeId) {
+        /*
+        , @RequestBody ShiftPlanDTO shiftPlanDTO
+        ShiftPlan persistentShiftPlan = new ShiftPlan();
+        persistentShiftPlan.setStid(shiftPlanId);
+        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
+        */
+        Employee tempEmployee = employeeRepository.getOne(employeeId);
+        DailySchedule dailySchedule = get(dailySchedulesId);
+        dailySchedule.addEmployee(tempEmployee);
+        dailyScheduleReopistory.save(dailySchedule);
+    }
     @PutMapping("/dailyschedules/{dailyschedule_id}")
     public void update(@PathVariable Long dailyschedule_id, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
 

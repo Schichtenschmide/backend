@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class DailyScheduleDTO {
 
-    private Long stid;
+    private Long identifier;
 
     @JsonProperty
     private boolean isActive;
@@ -26,12 +26,12 @@ public class DailyScheduleDTO {
     private Long shiftId;
 
 
-    public Long getStid() {
-        return stid;
+    public Long getIdentifier() {
+        return identifier;
     }
 
-    public void setStid(Long stid) {
-        this.stid = stid;
+    public void setIdentifier(Long identifier) {
+        this.identifier = identifier;
     }
 
     public boolean isActive() {

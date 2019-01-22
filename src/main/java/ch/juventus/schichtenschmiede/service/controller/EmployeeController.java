@@ -32,7 +32,7 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> all() {
         return employeeRepository.findAll().stream()
-                .map(e -> addHateoasLinks(e))
+                .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
     }
 

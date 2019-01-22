@@ -23,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 //TODO Auslagern in eigenen Folder aktuell gleicher folder wie repositories
 @SpringBootApplication
@@ -82,6 +83,7 @@ public class ExampleApplication {
             return new WebMvcConfigurerAdapter() {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
+                    //add delete to cors ...
                     //registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT");
                     registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT");
                 }
@@ -114,17 +116,34 @@ public class ExampleApplication {
             shiftRepository.save(shift3);
 
             java.util.Date date = new java.util.Date();
-            DailySchedule dailySchedule11 = new DailySchedule(true, new Date(date.getTime()), shift1);
-            DailySchedule dailySchedule12 = new DailySchedule(true, new Date(date.getTime()), shift2);
-            DailySchedule dailySchedule13 = new DailySchedule(true, new Date(date.getTime()), shift3);
+            Date sqlDate = new Date(date.getTime());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+            DailySchedule dailySchedule11 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift1);
+            DailySchedule dailySchedule12 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift2);
+            DailySchedule dailySchedule13 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift3);
+            cal.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+            DailySchedule dailySchedule14 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift2);
+            cal.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+            DailySchedule dailySchedule15 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift1);
+            cal.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+            DailySchedule dailySchedule16 = new DailySchedule(true, new Date(cal.getTime().getTime()), shift3);
 
             dailySchedule11.addEmployee(employee2);
             dailySchedule12.addEmployee(employee1);
             dailySchedule13.addEmployee(employee2);
+            dailySchedule14.addEmployee(employee2);
+            dailySchedule15.addEmployee(employee2);
+            dailySchedule16.addEmployee(employee2);
 
             dailyScheduleReopistory.save(dailySchedule11);
             dailyScheduleReopistory.save(dailySchedule12);
             dailyScheduleReopistory.save(dailySchedule13);
+            dailyScheduleReopistory.save(dailySchedule14);
+            dailyScheduleReopistory.save(dailySchedule15);
+            dailyScheduleReopistory.save(dailySchedule16);
 
 
 
