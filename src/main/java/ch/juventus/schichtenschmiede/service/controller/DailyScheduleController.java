@@ -53,23 +53,26 @@ public class DailyScheduleController {
                 .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
         List<DailySchedule> dailySchedulesOfWeek = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateOfWeek);
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        Date monday = new Date(cal.getTime().getTime());
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        Date sunday = new Date(cal.getTime().getTime());
+        Date monday = getDateOfWeekDay(dateOfWeek, Calendar.MONDAY);
+        Date sunday = getDateOfWeekDay(dateOfWeek, Calendar.SUNDAY);
 
         for (Iterator i = allDailySchedules.iterator(); i.hasNext();) {
-            DailySchedule ds = (DailySchedule) i.next();
-            if (ds.getDate().before(sunday) || ds.getDate().equals(sunday) || ds.getDate().after(monday) || ds.getDate().equals(monday)) {
-                dailySchedulesOfWeek.add(ds);
+            DailySchedule dailySchedule = (DailySchedule) i.next();
+            if (dailySchedule.getDate().before(sunday) || dailySchedule.getDate().equals(sunday) || dailySchedule.getDate().after(monday) || dailySchedule.getDate().equals(monday)) {
+                dailySchedulesOfWeek.add(dailySchedule);
             }
         }
 
         return dailySchedulesOfWeek;
     }
 
+    public Date getDateOfWeekDay(java.util.Date dateOfWeek, int dayOfWeek) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateOfWeek);
+        cal.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+
+        return new Date(cal.getTime().getTime());
+    }
 
     @GetMapping("/dailyschedules/{id}")
     public DailySchedule get(@PathVariable Long id) {
@@ -86,7 +89,6 @@ public class DailyScheduleController {
         return ResponseEntity.created(location).build();
     }
 
-
     @PutMapping("/dailyschedules/{dailySchedulesId}/addEmployee/{employeeId}")
     public void addEmployee(@PathVariable Long dailySchedulesId, @PathVariable Long employeeId) {
         Employee tempEmployee = employeeRepository.getOne(employeeId);
@@ -94,11 +96,12 @@ public class DailyScheduleController {
         dailySchedule.addEmployee(tempEmployee);
         dailyScheduleReopistory.save(dailySchedule);
     }
-    @PutMapping("/dailyschedules/{dailyscheduleId}")
-    public void update(@PathVariable Long dailyscheduleId, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
+
+    @PutMapping("/dailyschedules/{dailyScheduleId}")
+    public void update(@PathVariable Long dailyScheduleId, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
 
         DailySchedule dailySchedule = new DailySchedule();
-        dailySchedule.setIdentifier(dailyscheduleId);
+        dailySchedule.setIdentifier(dailyScheduleId);
         dailyScheduleReopistory.save(prepareDailySchedule(dailySchedule, dailyScheduleDTO));
     }
 

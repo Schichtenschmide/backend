@@ -60,8 +60,12 @@ public class DailySchedule extends BaseEntity {
         super(isActive);
         this.date = date;
         this.shift = shift;
+        setDays();
+    }
+
+    public void setDays() {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(this.date);
         this.isMonday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
         this.isTuesday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY;
         this.isWednesday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY;
