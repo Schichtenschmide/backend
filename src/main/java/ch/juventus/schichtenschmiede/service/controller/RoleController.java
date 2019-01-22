@@ -2,7 +2,8 @@ package ch.juventus.schichtenschmiede.service.controller;
 
 
 import ch.juventus.schichtenschmiede.persistency.entity.Role;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
+import ch.juventus.schichtenschmiede.service.entity.RoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +28,14 @@ public class RoleController {
     @GetMapping("/roles")
     public List<Role> all() {
         return roleRepository.findAll().stream()
-                .map(e->addHateoasLinks(e))
+                .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/roles")
-    public ResponseEntity<String> create(@RequestBody Role role) {
+    public ResponseEntity<String> create(@RequestBody RoleDTO roleDTO) {
 
-        Role persistedRole = roleRepository.save(role);
+        Role persistedRole = roleRepository.save(prepareRole(new Role(), roleDTO));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -48,14 +49,20 @@ public class RoleController {
     }
 
     @PutMapping("/roles/{id}")
-    public void update(@PathVariable Long id, @RequestBody Role role) {
-        role.setIdentifier(id);
+    public void update(@PathVariable Long id, @RequestBody RoleDTO roleDTO) {
+        Role persistenRole = new Role();
+        persistenRole.setIdentifier(id);
 
-        roleRepository.save(role);
+        roleRepository.save(prepareRole(persistenRole, roleDTO));
     }
 
     private Role addHateoasLinks(Role role) {
         role.add(linkTo(methodOn(RoleController.class).get(role.getIdentifier())).withSelfRel());
         return role;
+    }
+    private Role prepareRole(Role persistentRole, RoleDTO roleDTO){
+        persistentRole.setName(roleDTO.getName());
+        persistentRole.setActive(roleDTO.isActive());
+        return persistentRole;
     }
 }

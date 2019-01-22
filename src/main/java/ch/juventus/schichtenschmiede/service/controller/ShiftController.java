@@ -1,8 +1,8 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
 import ch.juventus.schichtenschmiede.persistency.entity.Shift;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
 import ch.juventus.schichtenschmiede.service.entity.ShiftDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class ShiftController {
     @GetMapping("/shifts")
     public List<Shift> all() {
         return shiftRepository.findAll().stream()
-                .map(e -> addHateoasLinks(e))
+                .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
     }
 

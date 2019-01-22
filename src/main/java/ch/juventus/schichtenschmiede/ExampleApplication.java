@@ -10,7 +10,7 @@ import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.ShiftPlanRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;*/
 import ch.juventus.schichtenschmiede.persistency.entity.*;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.*;
+import ch.juventus.schichtenschmiede.persistency.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

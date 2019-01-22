@@ -2,9 +2,9 @@ package ch.juventus.schichtenschmiede.service.controller;
 
 import ch.juventus.schichtenschmiede.persistency.entity.DailySchedule;
 import ch.juventus.schichtenschmiede.persistency.entity.Employee;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.DailyScheduleReopistory;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.ShiftRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.DailyScheduleReopistory;
+import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
 import ch.juventus.schichtenschmiede.service.entity.DailyScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +50,9 @@ public class DailyScheduleController {
     public List<DailySchedule> allOfWeek(@PathVariable java.util.Date dateOfWeek) {
 
         List<DailySchedule> allDailySchedules = dailyScheduleReopistory.findAll().stream()
-                .map(e -> addHateoasLinks(e))
+                .map(this::addHateoasLinks)
                 .collect(Collectors.toList());
-        List<DailySchedule> dailySchedulesOfWeek = new ArrayList<DailySchedule>();
+        List<DailySchedule> dailySchedulesOfWeek = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateOfWeek);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -78,7 +78,7 @@ public class DailyScheduleController {
 
     @PostMapping("/dailyschedules")
     public ResponseEntity<String> create(@RequestBody DailyScheduleDTO dailyScheduleDTO) {
-        DailySchedule dailySchedule = dailyScheduleReopistory.save(prepareDailySchedule(new DailySchedule(), dailyScheduleDTO));
+        DailySchedule dailySchedule = dailyScheduleReopistory.save(createDailySchedule(dailyScheduleDTO));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -89,22 +89,16 @@ public class DailyScheduleController {
 
     @PutMapping("/dailyschedules/{dailySchedulesId}/addEmployee/{employeeId}")
     public void addEmployee(@PathVariable Long dailySchedulesId, @PathVariable Long employeeId) {
-        /*
-        , @RequestBody ShiftPlanDTO shiftPlanDTO
-        ShiftPlan persistentShiftPlan = new ShiftPlan();
-        persistentShiftPlan.setStid(shiftPlanId);
-        shiftPlanRepository.save(prepareShifPlan(persistentShiftPlan, shiftPlanDTO));
-        */
         Employee tempEmployee = employeeRepository.getOne(employeeId);
         DailySchedule dailySchedule = get(dailySchedulesId);
         dailySchedule.addEmployee(tempEmployee);
         dailyScheduleReopistory.save(dailySchedule);
     }
-    @PutMapping("/dailyschedules/{dailyschedule_id}")
-    public void update(@PathVariable Long dailyschedule_id, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
+    @PutMapping("/dailyschedules/{dailyscheduleId}")
+    public void update(@PathVariable Long dailyscheduleId, @RequestBody DailyScheduleDTO dailyScheduleDTO) {
 
         DailySchedule dailySchedule = new DailySchedule();
-        dailySchedule.setIdentifier(dailyschedule_id);
+        dailySchedule.setIdentifier(dailyscheduleId);
         dailyScheduleReopistory.save(prepareDailySchedule(dailySchedule, dailyScheduleDTO));
     }
 
@@ -121,8 +115,12 @@ public class DailyScheduleController {
 
         return dailySchedule;
     }
-    private DailySchedule prepareDailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO ){
 
+    private DailySchedule createDailySchedule(DailyScheduleDTO dailyScheduleDTO) {
+        return new DailySchedule(true, new Date(dailyScheduleDTO.getDate().getTime()), shiftRepository.getOne(dailyScheduleDTO.getShiftId()));
+    }
+
+    private DailySchedule prepareDailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO ){
 
         dailySchedule.setActive(dailyScheduleDTO.isActive());
 

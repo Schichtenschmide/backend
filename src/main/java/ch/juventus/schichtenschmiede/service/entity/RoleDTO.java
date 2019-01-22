@@ -7,19 +7,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since: ${date}
  */
 public class RoleDTO {
-    private Long stid;
+    private Long identifier;
 
     private String name;
 
     @JsonProperty
     private boolean isActive;
 
-    public Long getStid() {
-        return stid;
+    public Long getIdentifier() {
+        return identifier;
     }
 
-    public void setStid(Long stid) {
-        this.stid = stid;
+    public void setIdentifier(Long identifier) {
+        this.identifier = identifier;
     }
 
     public String getName() {
@@ -36,14 +36,5 @@ public class RoleDTO {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "RoleDTO{" +
-                "stid=" + stid +
-                ", name='" + name + '\'' +
-                ", isActive=" + isActive +
-                '}';
     }
 }

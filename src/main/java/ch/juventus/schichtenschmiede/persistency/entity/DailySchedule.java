@@ -47,7 +47,7 @@ public class DailySchedule extends BaseEntity {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "shift_id")
+    @JoinColumn(name = "dailyschedule_id")
     @JsonIdentityReference(alwaysAsId = true)
     private Shift shift;
 

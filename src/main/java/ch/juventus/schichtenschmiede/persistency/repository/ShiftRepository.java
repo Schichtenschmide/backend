@@ -1,4 +1,4 @@
-package ch.juventus.schichtenschmiede.persistency.repositoryNew;
+package ch.juventus.schichtenschmiede.persistency.repository;
 
 import ch.juventus.schichtenschmiede.persistency.entity.Shift;
 import org.springframework.data.jpa.repository.JpaRepository;

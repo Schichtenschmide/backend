@@ -1,8 +1,8 @@
 package ch.juventus.schichtenschmiede.service.controller;
 
 import ch.juventus.schichtenschmiede.persistency.entity.Employee;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.EmployeeRepository;
-import ch.juventus.schichtenschmiede.persistency.repositoryNew.RoleRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
+import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
 import ch.juventus.schichtenschmiede.service.entity.EmployeeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

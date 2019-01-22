@@ -31,8 +31,6 @@ public class Role extends BaseEntity {
     public Role(boolean isActive, String name) {
         super(isActive);
         this.name = name;
-
-
     }
 
     public String getName() {

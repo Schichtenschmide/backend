@@ -25,7 +25,6 @@ public class DailyScheduleDTO {
 
     private Long shiftId;
 
-
     public Long getIdentifier() {
         return identifier;
     }

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class EmployeeDTO {
 
 
-    private Long stid;
+    private Long identifier;
 
     private String firstName;
 
@@ -25,12 +25,12 @@ public class EmployeeDTO {
 
     private Long roleId;
 
-    public Long getStid() {
-        return stid;
+    public Long getIdentifier() {
+        return identifier;
     }
 
-    public void setStid(Long stid) {
-        this.stid = stid;
+    public void setIdentifier(Long identifier) {
+        this.identifier = identifier;
     }
 
     public String getFirstName() {

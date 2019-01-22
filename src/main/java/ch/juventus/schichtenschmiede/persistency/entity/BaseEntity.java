@@ -48,10 +48,13 @@ public abstract class BaseEntity extends ResourceSupport {
     }
 
     //abstract methods
+    @Override
     public abstract boolean equals(Object o);
 
+    @Override
     public abstract int hashCode();
 
+    @Override
     public abstract String toString();
 
 }

@@ -29,7 +29,6 @@ public class Employee extends BaseEntity {
     @Size(min = 2, max = 20)
     private String lastName;
 
-    //TODO 20er Schritte implementieren
     @NotNull
     @Min(20)
     @Max(100)
