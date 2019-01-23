@@ -1,16 +1,13 @@
 package ch.juventus.schichtenschmiede;
-/*
-import ch.juventus.schichtenschmiede.persistency.entity.EmployeeOld;
-import ch.juventus.schichtenschmiede.persistency.entity.RoleOld;
-import ch.juventus.schichtenschmiede.persistency.entity.ShiftOld;
-import ch.juventus.schichtenschmiede.persistency.entity.ShiftPlanOld;
 
+import ch.juventus.schichtenschmiede.persistency.entity.DailySchedule;
+import ch.juventus.schichtenschmiede.persistency.entity.Employee;
+import ch.juventus.schichtenschmiede.persistency.entity.Role;
+import ch.juventus.schichtenschmiede.persistency.entity.Shift;
+import ch.juventus.schichtenschmiede.persistency.repository.DailyScheduleReopistory;
 import ch.juventus.schichtenschmiede.persistency.repository.EmployeeRepository;
 import ch.juventus.schichtenschmiede.persistency.repository.RoleRepository;
-import ch.juventus.schichtenschmiede.persistency.repository.ShiftPlanRepository;
-import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;*/
-import ch.juventus.schichtenschmiede.persistency.entity.*;
-import ch.juventus.schichtenschmiede.persistency.repository.*;
+import ch.juventus.schichtenschmiede.persistency.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.sql.Date;
 import java.util.Calendar;
 
-//TODO Auslagern in eigenen Folder aktuell gleicher folder wie repositories
 @SpringBootApplication
 @EnableSwagger2
 public class ExampleApplication {
@@ -37,36 +33,13 @@ public class ExampleApplication {
     @Component
     class initRepositoryCLR implements CommandLineRunner {
 
-        /*
-        private final RoleRepository roleRepository;
-        private final EmployeeRepository employeeRepository;
-        private final ShiftPlanRepository shiftPlanRepository;
-        private final ShiftRepository shiftRepository;
-        */
-        //New Repos
+
         private final RoleRepository roleRepository;
         private final EmployeeRepository employeeRepository;
         private final ShiftRepository shiftRepository;
         private final DailyScheduleReopistory dailyScheduleReopistory;
 
-        /*
-                @Autowired
-                public initRepositoryCLR(RoleRepository roleRepository,
-                                         EmployeeRepository employeeRepository,
-                                         ShiftPlanRepository shiftPlanRepository,
-                                         ShiftRepository shiftRepository,
-                                         RoleRepository2 roleRepository2, EmployeeRepository2 employeeRepository2, ShiftPlanRepository2 shiftPlanRepository2, ShiftRepository2 shiftRepository2, DailyScheduleReopistory dailyScheduleReopistory) {
-                    this.roleRepository = roleRepository;
-                    this.employeeRepository = employeeRepository;
-                    this.shiftPlanRepository = shiftPlanRepository;
-                    this.shiftRepository = shiftRepository;
-                    this.roleRepository2 = roleRepository2;
-                    this.employeeRepository2 = employeeRepository2;
-                    this.shiftPlanRepository2 = shiftPlanRepository2;
-                    this.shiftRepository2 = shiftRepository2;
-                    this.dailyScheduleReopistory = dailyScheduleReopistory;
-                }
-                */
+
         @Autowired
         public initRepositoryCLR(RoleRepository roleRepository,
                                  EmployeeRepository employeeRepository,
@@ -83,8 +56,7 @@ public class ExampleApplication {
             return new WebMvcConfigurerAdapter() {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
-                    //add delete to cors ...
-                    //registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT");
+                    //registry.addMapping("/**").allowedOrigins("https://schichtenschmiede-juventus.scapp.io").allowedMethods("GET", "POST","PUT")
                     registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT");
                 }
             };
@@ -100,23 +72,23 @@ public class ExampleApplication {
             roleRepository.save(kitchen);
             roleRepository.save(service);
 
-            Employee employee1 = new Employee(true,"Tim", "Taylor", 20, kitchen);
-            Employee employee2 = new Employee(true,"Tom", "Nox", 100, service);
+            Employee employee1 = new Employee(true, "Tim", "Taylor", 20, kitchen);
+            Employee employee2 = new Employee(true, "Tom", "Nox", 100, service);
 
 
             employeeRepository.save(employee1);
             employeeRepository.save(employee2);
 
-            Shift shift1 = new Shift(true,"Morgen", 8, 12, true, true, true, false, false, false, false, 3, service);
-            Shift shift2 = new Shift(true,"Mittag", 14, 19, true, false, true, true, false, false, false, 13, kitchen);
-            Shift shift3 = new Shift(true,"Nacht", 21, 24, false, false, true, false, true, false, false, 5, service);
+            Shift shift1 = new Shift(true, "Morgen", 8, 12, true, true, true, false, false, false, false, 3, service);
+            Shift shift2 = new Shift(true, "Mittag", 14, 19, true, false, true, true, false, false, false, 13, kitchen);
+            Shift shift3 = new Shift(true, "Nacht", 21, 24, false, false, true, false, true, false, false, 5, service);
 
             shiftRepository.save(shift1);
             shiftRepository.save(shift2);
             shiftRepository.save(shift3);
 
             java.util.Date date = new java.util.Date();
-            Date sqlDate = new Date(date.getTime());
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -144,53 +116,6 @@ public class ExampleApplication {
             dailyScheduleReopistory.save(dailySchedule14);
             dailyScheduleReopistory.save(dailySchedule15);
             dailyScheduleReopistory.save(dailySchedule16);
-
-
-
-
-
-
-            /*RoleOld kitchen = new RoleOld("Küche", true);
-            RoleOld service = new RoleOld("Service", true);
-
-            roleRepository.save(kitchen);
-            roleRepository.save(service);
-
-            EmployeeOld employee1 = new EmployeeOld("Tim", "Taylor", 20);
-            EmployeeOld employee2 = new EmployeeOld("Tom", "Nox", 100);
-
-            employee1.setRole(kitchen);
-            employee2.setRole(service);
-
-            employeeRepository.save(employee1);
-            employeeRepository.save(employee2);
-
-            ShiftOld shift1 = new ShiftOld("Morgen", 8, 12, true, true, true, false, false, false, false, "ms", true, 3);
-            ShiftOld shift2 = new ShiftOld("Mittag", 14, 19, true, false, true, true, false, false, false, "ms", true, 13);
-            ShiftOld shift3 = new ShiftOld("Nacht", 21, 24, false, false, true, false, true, false, false, "ns", true, 5);
-
-            shift1.setRole(service);
-            shift2.setRole(kitchen);
-            shift3.setRole(service);
-            shiftRepository.save(shift1);
-            shiftRepository.save(shift2);
-            shiftRepository.save(shift3);
-
-            ShiftPlanOld shiftplan2 = new ShiftPlanOld(11, 2018, true);
-            shiftplan2.setShiftOld(shift1);
-
-
-
-            shiftPlanRepository.save(shiftplan2);
-
-            employee1.addShiftplan(shiftplan2);
-            employee2.addShiftplan(shiftplan2);
-
-
-            employeeRepository.save(employee1);
-            employeeRepository.save(employee2);*/
-
-
         }
     }
 }

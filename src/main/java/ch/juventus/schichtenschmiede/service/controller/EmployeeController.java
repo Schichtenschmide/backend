@@ -43,7 +43,7 @@ public class EmployeeController {
 
     @PostMapping("/employees")
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee persistentEmployee = employeeRepository.save(prepareEmployee(new Employee(),employeeDTO));
+        Employee persistentEmployee = employeeRepository.save(prepareEmployee(new Employee(), employeeDTO));
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(persistentEmployee.getIdentifier()).toUri();
@@ -52,10 +52,10 @@ public class EmployeeController {
 
     @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@PathVariable Long employeeId,
-                               @RequestBody EmployeeDTO  employeeDTO) {
+                               @RequestBody EmployeeDTO employeeDTO) {
         Employee persistentEmployee = new Employee();
         persistentEmployee.setIdentifier(employeeId);
-        employeeRepository.save(prepareEmployee(persistentEmployee , employeeDTO));
+        employeeRepository.save(prepareEmployee(persistentEmployee, employeeDTO));
     }
 
     private Employee addHateoasLinks(Employee employee) {
@@ -65,7 +65,8 @@ public class EmployeeController {
         }
         return employee;
     }
-    private Employee prepareEmployee(Employee persistentEmployee, EmployeeDTO employeeDTO){
+
+    private Employee prepareEmployee(Employee persistentEmployee, EmployeeDTO employeeDTO) {
         persistentEmployee.setFirstName(employeeDTO.getFirstName());
         persistentEmployee.setLastName(employeeDTO.getLastName());
         persistentEmployee.setActive(employeeDTO.isActive());

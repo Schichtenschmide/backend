@@ -70,7 +70,8 @@ public class ShiftController {
         }
         return shift;
     }
-    private Shift prepareShift(Shift persistentShift, ShiftDTO shiftDTO ){
+
+    private Shift prepareShift(Shift persistentShift, ShiftDTO shiftDTO) {
         persistentShift.setName(shiftDTO.getName());
         persistentShift.setStartTime(shiftDTO.getStartTime());
         persistentShift.setEndTime(shiftDTO.getEndTime());

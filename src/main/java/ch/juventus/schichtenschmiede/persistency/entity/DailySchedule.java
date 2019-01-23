@@ -41,9 +41,9 @@ public class DailySchedule extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "daily_schedule_employees",
-            joinColumns = { @JoinColumn(name = "fk_dailyschedule") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_employee") })
-    private Set<Employee> employees = new HashSet<>();;
+            joinColumns = {@JoinColumn(name = "fk_dailyschedule")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_employee")})
+    private Set<Employee> employees = new HashSet<>();
 
     @ManyToOne
     @NotNull

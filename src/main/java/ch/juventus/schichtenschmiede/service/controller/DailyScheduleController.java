@@ -56,7 +56,7 @@ public class DailyScheduleController {
         Date monday = getDateOfWeekDay(dateOfWeek, Calendar.MONDAY);
         Date sunday = getDateOfWeekDay(dateOfWeek, Calendar.SUNDAY);
 
-        for (Iterator i = allDailySchedules.iterator(); i.hasNext();) {
+        for (Iterator i = allDailySchedules.iterator(); i.hasNext(); ) {
             DailySchedule dailySchedule = (DailySchedule) i.next();
             if (dailySchedule.getDate().before(sunday) || dailySchedule.getDate().equals(sunday) || dailySchedule.getDate().after(monday) || dailySchedule.getDate().equals(monday)) {
                 dailySchedulesOfWeek.add(dailySchedule);
@@ -123,7 +123,7 @@ public class DailyScheduleController {
         return new DailySchedule(true, new Date(dailyScheduleDTO.getDate().getTime()), shiftRepository.getOne(dailyScheduleDTO.getShiftId()));
     }
 
-    private DailySchedule prepareDailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO ){
+    private DailySchedule prepareDailySchedule(DailySchedule dailySchedule, DailyScheduleDTO dailyScheduleDTO) {
 
         dailySchedule.setActive(dailyScheduleDTO.isActive());
 

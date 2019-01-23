@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomepageController {
 
     @GetMapping("/")
-    public String showHome(){
+    public String showHome() {
         return "Please go to <a href='/swagger-ui.html'>swagger</a> to see what the API offers";
     }
 }

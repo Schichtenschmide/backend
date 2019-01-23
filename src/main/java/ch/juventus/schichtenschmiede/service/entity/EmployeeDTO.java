@@ -3,6 +3,7 @@ package ch.juventus.schichtenschmiede.service.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 //TODO Miguel
+
 /**
  * @author : ${user}
  * @since: ${date}

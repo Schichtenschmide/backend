@@ -60,7 +60,8 @@ public class RoleController {
         role.add(linkTo(methodOn(RoleController.class).get(role.getIdentifier())).withSelfRel());
         return role;
     }
-    private Role prepareRole(Role persistentRole, RoleDTO roleDTO){
+
+    private Role prepareRole(Role persistentRole, RoleDTO roleDTO) {
         persistentRole.setName(roleDTO.getName());
         persistentRole.setActive(roleDTO.isActive());
         return persistentRole;

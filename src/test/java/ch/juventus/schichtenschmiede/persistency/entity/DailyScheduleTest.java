@@ -2,10 +2,11 @@ package ch.juventus.schichtenschmiede.persistency.entity;
 
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author: Alexandra
