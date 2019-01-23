@@ -108,7 +108,7 @@ public class DailyScheduleController {
     private DailySchedule addHateoasLinks(DailySchedule dailySchedule) {
         dailySchedule.add(linkTo(methodOn(DailyScheduleController.class).get(dailySchedule.getIdentifier())).withSelfRel());
 
-        if (dailySchedule.getEmployees() != null) {
+        if (dailySchedule.getEmployees() != null && dailySchedule.getEmployees().size() > 0) {
             dailySchedule.add(linkTo(methodOn(EmployeeController.class).get(dailySchedule.getEmployees().iterator().next().getIdentifier())).withRel("employee"));
         }
 
